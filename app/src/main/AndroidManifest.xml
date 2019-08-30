@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.williantaiguara.anota">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.AdicionarDisciplinasActivity"
+            android:label="@string/title_activity_adicionar_disciplinas"
+            android:parentActivityName=".activity.AdicionarCursoActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.williantaiguara.anota.activity.AdicionarCursoActivity" />
+        </activity>
+        <activity
+            android:name=".activity.AdicionarCursoActivity"
+            android:label="@string/title_activity_adicionar_curso"
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.williantaiguara.anota.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activity.AdicionarLembreteActivity"
+            android:label="@string/title_activity_adicionar_lembrete"
+            android:parentActivityName=".activity.LembretesActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.williantaiguara.anota.activity.LembretesActivity"
+                android:windowSoftInputMode="adjustResize" />
+        </activity>
+        <activity
+            android:name=".activity.AtualizarLembreteActivity"
+            android:label="@string/title_activity_atualizar_lembrete"
+            android:parentActivityName=".activity.LembretesActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.williantaiguara.anota.activity.LembretesActivity"
+                android:windowSoftInputMode="adjustResize" />
+        </activity>
+        <activity
+            android:name=".activity.LembretesActivity"
+            android:label="@string/title_activity_lembretes"
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.williantaiguara.anota.activity.MainActivity" />
+        </activity>
+        <activity android:name=".activity.LoginActivity" />
+        <activity
+            android:name=".activity.CadastroActivity"
+            android:label="@string/title_activity_cadastro"
+            android:parentActivityName=".activity.OpenActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.williantaiguara.anota.activity.OpenActivity" />
+        </activity>
+        <activity
+            android:name=".activity.OpenActivity"
+            android:theme="@style/Theme.Intro">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+    </application>
+
+</manifest>

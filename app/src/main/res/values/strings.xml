@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Anota</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Anota</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_logout">Sair</string>
+
+    <string name="menu_adicionar">Adicionar Curso</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_lembretes">Lembretes</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="title_activity_open">OpenActivity</string>
+    <string name="tenha_suas_anota_es_sempre_na_palma_da_mao">Tenha suas anotações\n sempre na palma da mão!</string>
+    <string name="title_activity_cadastro">Cadastro</string>
+    <string name="confirme_a_senha">Confirme a Senha</string>
+    <string name="title_activity_lembretes">LembretesActivity</string>
+    <string name="title_activity_adicionar_lembrete">AdicionarLembreteActivity</string>
+    <string name="title_activity_atualizar_lembrete">Atualizar Lembrete</string>
+    <string name="title_activity_adicionar_curso">AdicionarCursoActivity</string>
+    <string name="proximo">Proximo</string>
+    <string name="informe_curso_o_semestre_n_e_a_quantidade_de_disciplinas">Informe Curso, o Semestre  e a Quantidade de Disciplinas:</string>
+    <string name="curso">Curso</string>
+    <string name="semestre">Semestre</string>
+    <string name="quantidade_de_disciplinas">Quantidade de Disciplinas</string>
+    <string name="title_activity_adicionar_disciplinas">AdicionarDisciplinasActivity</string>
+    <string name="action_settings">Settings</string>
+</resources>

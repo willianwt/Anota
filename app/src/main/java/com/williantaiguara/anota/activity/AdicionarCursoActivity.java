@@ -1,0 +1,84 @@
+package com.williantaiguara.anota.activity;
+
+import android.os.Bundle;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.williantaiguara.anota.R;
+import com.williantaiguara.anota.config.ConfiguracaoFirebase;
+
+import java.util.ArrayList;
+
+public class AdicionarCursoActivity extends AppCompatActivity {
+
+    private AutoCompleteTextView tvAdicionarCurso;
+    private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_adicionar_curso);
+        Toolbar toolbar = findViewById(R.id.toolbarAdicionarCurso);
+        toolbar.setTitle("Adiconar Novo Curso");
+
+        setSupportActionBar(toolbar);
+
+
+        tvAdicionarCurso = findViewById(R.id.autoCompleteTVAdicionarCurso);
+        final ArrayAdapter<String> autoComplete = new ArrayAdapter<>(this, android.R.layout.simple_selectable_list_item);
+
+        firebaseRef.child("cursos").orderByValue().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    for (DataSnapshot suggestionSnapshot : dataSnapshot.getChildren()) {
+                        String suggestion = suggestionSnapshot.getValue(String.class);
+                        autoComplete.add(suggestion);
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        tvAdicionarCurso.setAdapter(autoComplete);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_adicionar_curso, menu);
+        return true;
+    }
+
+}

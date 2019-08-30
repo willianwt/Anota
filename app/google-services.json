@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "247577427823",
+    "firebase_url": "https://anota-5043d.firebaseio.com",
+    "project_id": "anota-5043d",
+    "storage_bucket": "anota-5043d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:247577427823:android:876d9cebc01f2e07",
+        "android_client_info": {
+          "package_name": "com.williantaiguara.anota"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "247577427823-3a6eh9r0ad5lf0ea3gm2n14r3r40cfph.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.williantaiguara.anota",
+            "certificate_hash": "d63aa18e124b5b8c7a585cc2bb273bb7166438c7"
+          }
+        },
+        {
+          "client_id": "247577427823-2k3m8odhqga5ko59b02b34vn3hij24je.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKV_mGJ8BIF8BIBPAgBhYfhtPL5Kr0tjE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "247577427823-2k3m8odhqga5ko59b02b34vn3hij24je.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
