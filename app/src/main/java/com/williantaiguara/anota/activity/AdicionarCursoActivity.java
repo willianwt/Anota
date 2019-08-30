@@ -1,5 +1,6 @@
 package com.williantaiguara.anota.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -12,10 +13,14 @@ import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +34,8 @@ public class AdicionarCursoActivity extends AppCompatActivity {
 
     private AutoCompleteTextView tvAdicionarCurso;
     private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
+    private EditText semestre;
+    private EditText qtdDisciplinas;
 
 
     @Override
@@ -39,6 +46,9 @@ public class AdicionarCursoActivity extends AppCompatActivity {
         toolbar.setTitle("Adiconar Novo Curso");
 
         setSupportActionBar(toolbar);
+
+        semestre = findViewById(R.id.etSemestre);
+        qtdDisciplinas = findViewById(R.id.etQtdDisciplinas);
 
 
         tvAdicionarCurso = findViewById(R.id.autoCompleteTVAdicionarCurso);
@@ -81,4 +91,42 @@ public class AdicionarCursoActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.adicionar_curso){
+            try{
+                VerificarCampos();
+
+            }catch (Exception e){ //TODO: TRATAR ERROS
+                e.printStackTrace();
+
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void VerificarCampos(){
+        if (!tvAdicionarCurso.getText().toString().isEmpty()){
+            if (!semestre.getText().toString().isEmpty()){
+                if (!qtdDisciplinas.getText().toString().isEmpty()){
+                    Intent intent = new Intent(this, AdicionarDisciplinasActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(AdicionarCursoActivity.this,
+                            "Informe a quantidade de DISCIPLINAS!",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                Toast.makeText(AdicionarCursoActivity.this,
+                        "Informe o SEMESTRE!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(AdicionarCursoActivity.this,
+                    "Informe o NOME DO CURSO!",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
 }

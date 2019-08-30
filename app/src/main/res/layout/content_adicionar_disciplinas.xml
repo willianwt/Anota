@@ -84,4 +84,10 @@
         android:background="@drawable/button_green"
         android:text="Adicionar Disciplina!" />
 
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/listDivider" />
+
 </LinearLayout>
