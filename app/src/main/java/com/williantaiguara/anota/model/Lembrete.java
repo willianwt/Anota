@@ -23,8 +23,9 @@ public class Lembrete implements Serializable {
         FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         DatabaseReference firebase = ConfiguracaoFirebase.getFirebaseDatabase();
         String idUsuario = Base64Custom.CodificarBase64(autenticacao.getCurrentUser().getEmail());
-        firebase.child("lembretes")
+        firebase.child("usuarios")
                 .child(idUsuario)
+                .child("lembretes")
                 .push()
                 .setValue(this);
     }
@@ -33,8 +34,9 @@ public class Lembrete implements Serializable {
         FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         DatabaseReference firebase = ConfiguracaoFirebase.getFirebaseDatabase();
         String idUsuario = Base64Custom.CodificarBase64(autenticacao.getCurrentUser().getEmail());
-        firebase.child("lembretes")
+        firebase.child("usuarios")
                 .child(idUsuario)
+                .child("lembretes")
                 .child(key)
                 .setValue(this);
     }

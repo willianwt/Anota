@@ -105,8 +105,8 @@ public class LembretesActivity extends AppCompatActivity {
 
                                         String emailUsuario = autenticacao.getCurrentUser().getEmail();
                                         String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
-                                        lembretesRef = firebaseRef.child("lembretes")
-                                                .child(idUsuario);
+                                        lembretesRef = firebaseRef.child("usuarios")
+                                                .child(idUsuario).child("lembretes");
 
                                         lembretesRef.child(lembrete.getKey()).removeValue();
                                         Toast.makeText(LembretesActivity.this, "Exclusão Confirmada!", Toast.LENGTH_SHORT).show();
@@ -183,8 +183,9 @@ public class LembretesActivity extends AppCompatActivity {
 
                 String emailUsuario = autenticacao.getCurrentUser().getEmail();
                 String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
-                lembretesRef = firebaseRef.child("lembretes")
-                        .child(idUsuario);
+                lembretesRef = firebaseRef.child("usuarios")
+                        .child(idUsuario)
+                        .child("lembretes");
 
                 lembretesRef.child(lembrete.getKey()).removeValue();
                 Toast.makeText(getApplicationContext(), "Exclusão Confirmada!", Toast.LENGTH_SHORT).show();
@@ -210,7 +211,7 @@ public class LembretesActivity extends AppCompatActivity {
     public void recuperarLembretes(){
         String emailUsuario = autenticacao.getCurrentUser().getEmail();
         String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
-        Query query = firebaseRef.child("lembretes").child(idUsuario).orderByChild("data");
+        Query query = firebaseRef.child("usuarios").child(idUsuario).child("lembretes").orderByChild("data");
         valueEventListenerLembretes = query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

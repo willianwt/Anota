@@ -2,6 +2,7 @@ package com.williantaiguara.anota.activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -31,7 +32,6 @@ public class AdicionarDisciplinasActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewListaDisciplinasAdicionadas;
     private List<Disciplina> disciplinaList = new ArrayList<>();
-    private Disciplina disciplina;
     private EditText nomeDisciplina;
     private EditText nomeProfessorDisciplina;
     private EditText emailProfessorDisciplina;
@@ -46,7 +46,6 @@ public class AdicionarDisciplinasActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbarAdicionarDisciplinas);
         toolbar.setTitle("Disciplina do Semestre");
         setSupportActionBar(toolbar);
-
         recyclerViewListaDisciplinasAdicionadas = findViewById(R.id.recyclerViewAdicionarDisciplinas);
         nomeDisciplina = findViewById(R.id.etNomeDisciplina);
         nomeProfessorDisciplina = findViewById(R.id.etNomeProfessor);
@@ -80,7 +79,6 @@ public class AdicionarDisciplinasActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_adicionar_disciplinas, menu);
         return true;
     }
@@ -129,6 +127,7 @@ public class AdicionarDisciplinasActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 excluirDisciplinaAdicionada(viewHolder);
+
             }
         };
 
@@ -149,7 +148,6 @@ public class AdicionarDisciplinasActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "Exclusão Confirmada!", Toast.LENGTH_SHORT).show();
                 adapter.notifyItemRemoved(position);
-
             }
         });
         alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
