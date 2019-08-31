@@ -48,18 +48,4 @@
             android:textSize="24sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/quantidade_de_disciplinas">
-
-        <EditText
-            android:id="@+id/etQtdDisciplinas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="numberSigned"
-            android:textSize="24sp" />
-    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

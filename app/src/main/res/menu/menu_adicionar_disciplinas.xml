@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.williantaiguara.anota.activity.AdicionarDisciplinasActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/concluir_adicionar_disciplinas"
+        android:icon="@drawable/mi_ic_finish"
+        android:title="@string/concluir"
+        android:visible="true"
+        app:showAsAction="always|withText" />
 </menu>

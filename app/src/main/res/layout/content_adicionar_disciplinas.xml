@@ -16,36 +16,18 @@
         android:text="Adicionar nova Disciplina:"
         android:textSize="24sp" />
 
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Disciplina" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNomeDisciplina"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:hint="Dia"
-                android:inputType="textNoSuggestions|text" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
+            android:hint="Disciplina"
+            android:imeOptions="actionNext"
+            android:inputType="textNoSuggestions|text" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,9 +40,12 @@
             android:layout_weight="1">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNomeProfessor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Professor" />
+                android:hint="Professor"
+                android:imeOptions="actionNext"
+                android:inputType="textNoSuggestions" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -69,14 +54,17 @@
             android:layout_weight="1">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmailProfessor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email" />
+                android:hint="Email"
+                android:imeOptions="actionDone"
+                android:inputType="textNoSuggestions" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btAdicionarDisciplina"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -84,10 +72,16 @@
         android:background="@drawable/button_green"
         android:text="Adicionar Disciplina!" />
 
-    <View
-        android:id="@+id/divider"
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:background="@android:color/black" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewAdicionarDisciplinas"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?android:attr/listDivider" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

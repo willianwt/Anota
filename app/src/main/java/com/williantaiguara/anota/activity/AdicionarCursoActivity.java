@@ -35,7 +35,6 @@ public class AdicionarCursoActivity extends AppCompatActivity {
     private AutoCompleteTextView tvAdicionarCurso;
     private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
     private EditText semestre;
-    private EditText qtdDisciplinas;
 
 
     @Override
@@ -48,11 +47,8 @@ public class AdicionarCursoActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         semestre = findViewById(R.id.etSemestre);
-        qtdDisciplinas = findViewById(R.id.etQtdDisciplinas);
-
-
         tvAdicionarCurso = findViewById(R.id.autoCompleteTVAdicionarCurso);
-        final ArrayAdapter<String> autoComplete = new ArrayAdapter<>(this, android.R.layout.simple_selectable_list_item);
+        final ArrayAdapter<String> autoComplete = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 
         firebaseRef.child("cursos").orderByValue().addValueEventListener(new ValueEventListener() {
             @Override
@@ -110,14 +106,8 @@ public class AdicionarCursoActivity extends AppCompatActivity {
     public void VerificarCampos(){
         if (!tvAdicionarCurso.getText().toString().isEmpty()){
             if (!semestre.getText().toString().isEmpty()){
-                if (!qtdDisciplinas.getText().toString().isEmpty()){
-                    Intent intent = new Intent(this, AdicionarDisciplinasActivity.class);
-                    startActivity(intent);
-                }else{
-                    Toast.makeText(AdicionarCursoActivity.this,
-                            "Informe a quantidade de DISCIPLINAS!",
-                            Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent(this, AdicionarDisciplinasActivity.class);
+                startActivity(intent);
             }else{
                 Toast.makeText(AdicionarCursoActivity.this,
                         "Informe o SEMESTRE!",
