@@ -28,6 +28,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:hint="@string/curso"
+            android:imeOptions="actionNext"
             android:inputType="text"
             android:textSize="24sp" />
 
@@ -44,6 +45,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/semestre"
+            android:imeOptions="actionDone"
             android:inputType="numberSigned"
             android:textSize="24sp" />
     </com.google.android.material.textfield.TextInputLayout>

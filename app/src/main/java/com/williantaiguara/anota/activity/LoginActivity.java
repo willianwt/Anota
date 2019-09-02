@@ -50,8 +50,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 openProgressBar();
                 if (task.isSuccessful()){
-                    abrirTelaPrincipal();
                     closeProgressBar();
+                    abrirTelaPrincipal();
                 }else{
                     String excecao = "";
                     try{

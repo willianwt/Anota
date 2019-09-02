@@ -1,9 +1,11 @@
 package com.williantaiguara.anota.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -37,6 +39,9 @@ public class AdicionarDisciplinasActivity extends AppCompatActivity {
     private EditText emailProfessorDisciplina;
     private Button botaoAdicionarDisciplina;
     private AdapterAdicionarDisciplinas adapter = new AdapterAdicionarDisciplinas(disciplinaList);
+    private String nomeCurso;
+    private String semestre;
+    private Disciplina disciplina;
 
 
     @Override
@@ -67,6 +72,11 @@ public class AdicionarDisciplinasActivity extends AppCompatActivity {
 
         swipe();
 
+        //recuperar dados da activity adicionar curso
+        Bundle dados = getIntent().getExtras();
+        nomeCurso = dados.getString("nomeCurso");
+        semestre = dados.getString("semestre");
+
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewListaDisciplinasAdicionadas.setLayoutManager(layoutManager);
@@ -81,6 +91,32 @@ public class AdicionarDisciplinasActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_adicionar_disciplinas, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.concluir_adicionar_disciplinas){
+            try{
+                item.setEnabled(false);
+                try {
+                    salvarCurso();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                abrirTelaPrincipal();
+               //TODO: salvar e retornar ao menu principal ou ir para a tela do curso
+                item.setEnabled(true);
+
+            }catch (Exception e){ //TODO: TRATAR ERROS
+                e.printStackTrace();
+                item.setEnabled(true);
+
+            }
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void verificarCampos(){
@@ -162,5 +198,24 @@ public class AdicionarDisciplinasActivity extends AppCompatActivity {
         AlertDialog alert = alertDialog.create();
         alert.show();
 
+    }
+
+    public void salvarCurso(){
+
+
+        for (Disciplina disciplinaNaLista : disciplinaList){
+            disciplina = new Disciplina();
+            disciplina.setNomeDisciplina(disciplinaNaLista.getNomeDisciplina());
+            disciplina.setNomeProfessorDisciplina(disciplinaNaLista.getNomeProfessorDisciplina());
+            disciplina.setEmailProfessorDisciplina(disciplinaNaLista.getEmailProfessorDisciplina());
+
+            disciplina.salvarCurso(nomeCurso, semestre);
+        }
+    }
+
+    public void abrirTelaPrincipal() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }
