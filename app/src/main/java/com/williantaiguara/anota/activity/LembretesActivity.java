@@ -16,10 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.PersistableBundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,6 +50,7 @@ public class LembretesActivity extends AppCompatActivity {
     private DatabaseReference lembretesRef;
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private ProgressBar progressBar;
+    private TextView semLembretes;
 
     private ValueEventListener valueEventListenerLembretes;
 
@@ -62,6 +63,7 @@ public class LembretesActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbarAdicionarCurso);
         toolbar.setTitle("Lembretes");
 
+        semLembretes = findViewById(R.id.txSemLembretes);
         progressBar = findViewById(R.id.progressBarLembretes);
         setSupportActionBar(toolbar);
 
@@ -76,6 +78,7 @@ public class LembretesActivity extends AppCompatActivity {
         recyclerViewListaLembretes.setLayoutManager(layoutManager);
         recyclerViewListaLembretes.setHasFixedSize(true);
         recyclerViewListaLembretes.setAdapter(adapterLembretes);
+
         recyclerViewListaLembretes.addItemDecoration(new DividerItemDecoration(recyclerViewListaLembretes.getContext(), DividerItemDecoration.VERTICAL));
 
         //evento de click recyclerview
@@ -230,7 +233,7 @@ public class LembretesActivity extends AppCompatActivity {
 
                 adapterLembretes.notifyDataSetChanged();
                 ProgressBarCustom.closeProgressBar(progressBar);
-
+                nenhumLembreteEncontrado();
             }
 
             @Override
@@ -240,22 +243,14 @@ public class LembretesActivity extends AppCompatActivity {
         });
     }
 
-    public void semLembretes(){
+    public void nenhumLembreteEncontrado(){
         if (lembretes.isEmpty()) {
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(LembretesActivity.this);
+            recyclerViewListaLembretes.setVisibility(View.GONE);
+            semLembretes.setVisibility(View.VISIBLE);
 
-            alertDialog.setTitle("Está vazio!");
-            alertDialog.setMessage("Nenhum lembrete adicionado. Clique no + para adicionar um novo lembrete!");
-            alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-
-                }
-            });
-            AlertDialog alert = alertDialog.create();
-            if (!isFinishing()){
-                alert.show();
-            }
+        }else{
+            recyclerViewListaLembretes.setVisibility(View.VISIBLE);
+            semLembretes.setVisibility(View.GONE);
         }
     }
 
@@ -263,7 +258,6 @@ public class LembretesActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         recuperarLembretes();
-        semLembretes();
     }
 
     @Override
