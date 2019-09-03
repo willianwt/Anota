@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
@@ -78,60 +79,60 @@ public class LembretesActivity extends AppCompatActivity {
         recyclerViewListaLembretes.addItemDecoration(new DividerItemDecoration(recyclerViewListaLembretes.getContext(), DividerItemDecoration.VERTICAL));
 
         //evento de click recyclerview
-        recyclerViewListaLembretes.addOnItemTouchListener(
-                new RecyclerItemClickListener(
-                        getApplicationContext(),
-                        recyclerViewListaLembretes,
-                        new RecyclerItemClickListener.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, int position) {
-                                Lembrete lembrete = lembretes.get(position);
-                                Intent intent = new Intent(LembretesActivity.this, AtualizarLembreteActivity.class);
-                                intent.putExtra("objeto", lembrete);
-                                startActivity(intent);
+            recyclerViewListaLembretes.addOnItemTouchListener(
+                    new RecyclerItemClickListener(
+                            getApplicationContext(),
+                            recyclerViewListaLembretes,
+                            new RecyclerItemClickListener.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(View view, int position) {
+                                    Lembrete lembrete = lembretes.get(position);
+                                    Intent intent = new Intent(LembretesActivity.this, AtualizarLembreteActivity.class);
+                                    intent.putExtra("objeto", lembrete);
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public void onLongItemClick(View view, final int position) {
+
+                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(LembretesActivity.this);
+
+                                    alertDialog.setTitle("Excluir Lembrete:");
+                                    alertDialog.setMessage("Tem certeza que deseja excluir esse lembrete?");
+                                    alertDialog.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            Lembrete lembrete = lembretes.get(position);
+
+                                            String emailUsuario = autenticacao.getCurrentUser().getEmail();
+                                            String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
+                                            lembretesRef = firebaseRef.child("usuarios")
+                                                    .child(idUsuario).child("lembretes");
+
+                                            lembretesRef.child(lembrete.getKey()).removeValue();
+                                            Toast.makeText(LembretesActivity.this, "Exclusão Confirmada!", Toast.LENGTH_SHORT).show();
+                                            adapterLembretes.notifyItemRemoved(i);
+
+                                        }
+                                    });
+                                    alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            Toast.makeText(LembretesActivity.this, "Exclusão Cancelada!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    AlertDialog alert = alertDialog.create();
+                                    alert.show();
+                                }
+
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                                }
                             }
+                    ));
 
-                            @Override
-                            public void onLongItemClick(View view, final int position) {
-
-                                AlertDialog.Builder alertDialog = new AlertDialog.Builder(LembretesActivity.this);
-
-                                alertDialog.setTitle("Excluir Lembrete:");
-                                alertDialog.setMessage("Tem certeza que deseja excluir esse lembrete?");
-                                alertDialog.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        Lembrete lembrete = lembretes.get(position);
-
-                                        String emailUsuario = autenticacao.getCurrentUser().getEmail();
-                                        String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
-                                        lembretesRef = firebaseRef.child("usuarios")
-                                                .child(idUsuario).child("lembretes");
-
-                                        lembretesRef.child(lembrete.getKey()).removeValue();
-                                        Toast.makeText(LembretesActivity.this, "Exclusão Confirmada!", Toast.LENGTH_SHORT).show();
-                                        adapterLembretes.notifyItemRemoved(i);
-
-                                    }
-                                });
-                                alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        Toast.makeText(LembretesActivity.this, "Exclusão Cancelada!", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                                AlertDialog alert = alertDialog.create();
-                                alert.show();
-                            }
-
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                            }
-                        }
-                ));
-
-        swipe();
+            swipe();
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -208,9 +209,12 @@ public class LembretesActivity extends AppCompatActivity {
     }
 
 
+
+
     public void recuperarLembretes(){
         String emailUsuario = autenticacao.getCurrentUser().getEmail();
         String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
+
         Query query = firebaseRef.child("usuarios").child(idUsuario).child("lembretes").orderByChild("data");
         valueEventListenerLembretes = query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -223,8 +227,10 @@ public class LembretesActivity extends AppCompatActivity {
                     lembrete.setKey(dados.getKey());
                     lembretes.add(lembrete);
                 }
+
                 adapterLembretes.notifyDataSetChanged();
                 ProgressBarCustom.closeProgressBar(progressBar);
+
             }
 
             @Override
@@ -234,12 +240,30 @@ public class LembretesActivity extends AppCompatActivity {
         });
     }
 
+    public void semLembretes(){
+        if (lembretes.isEmpty()) {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(LembretesActivity.this);
 
+            alertDialog.setTitle("Está vazio!");
+            alertDialog.setMessage("Nenhum lembrete adicionado. Clique no + para adicionar um novo lembrete!");
+            alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            AlertDialog alert = alertDialog.create();
+            if (!isFinishing()){
+                alert.show();
+            }
+        }
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
         recuperarLembretes();
+        semLembretes();
     }
 
     @Override
@@ -254,4 +278,5 @@ public class LembretesActivity extends AppCompatActivity {
         super.onStop();
         firebaseRef.removeEventListener(valueEventListenerLembretes);
     }
+
 }

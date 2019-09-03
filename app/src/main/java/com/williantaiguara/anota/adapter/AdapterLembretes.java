@@ -39,12 +39,17 @@ public class AdapterLembretes extends RecyclerView.Adapter<AdapterLembretes.MyVi
         Lembrete lembrete = lembreteList.get(position);
 
         holder.titulo.setText(lembrete.getTitulo());
-        List<String> dataSeparada;
-        dataSeparada = Arrays.asList(lembrete.getData().split("-"));
-        Collections.reverse(dataSeparada);
-        String dataFormatada = TextUtils.join("/", dataSeparada);
-        holder.data.setText(dataFormatada);
-        if(lembrete.getConteudo().length() > 50){
+        List<String> dataSeparada = null;
+        if (dataSeparada != null){
+            dataSeparada = Arrays.asList(lembrete.getData().split("-"));
+            Collections.reverse(dataSeparada);
+            String dataFormatada = TextUtils.join("/", dataSeparada);
+            holder.data.setText(dataFormatada);
+        }else{
+            holder.data.setText("");
+        }
+
+        if(lembrete.getConteudo() != null && lembrete.getConteudo().length() > 50){
             String resumo = lembrete.getConteudo();
             resumo = resumo.substring(0, 50) + "...";
             holder.resumo.setText(resumo);

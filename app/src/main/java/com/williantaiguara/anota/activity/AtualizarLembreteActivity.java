@@ -54,7 +54,6 @@ public class AtualizarLembreteActivity extends AppCompatActivity {
         dataLembrete.setText(lembreteRecuperado.getData());
         conteudoLembrete.setText(lembreteRecuperado.getConteudo());
         keyLembrete = lembreteRecuperado.getKey();
-        Log.i("key", keyLembrete);
 
 
         dataLembrete.setOnFocusChangeListener(new View.OnFocusChangeListener() {

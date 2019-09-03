@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activity.MeusCursosActivity"
+            android:label="@string/title_activity_meus_cursos"
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.williantaiguara.anota.activity.MainActivity" />
+        </activity>
+        <activity
             android:name=".activity.AdicionarDisciplinasActivity"
             android:label="@string/title_activity_adicionar_disciplinas"
             android:parentActivityName=".activity.AdicionarCursoActivity"

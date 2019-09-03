@@ -10,19 +10,19 @@
             android:title="@string/menu_adicionar" />
         <item
             android:id="@+id/nav_lembretes"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_lembretes"
             android:title="@string/menu_lembretes" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:id="@+id/nav_meus_cursos"
+            android:icon="@drawable/ic_meus_cursos"
+            android:title="@string/menu_meus_cursos" />
         <item
             android:id="@+id/nav_tools"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_tools" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/configuracoes">
         <menu>
             <item
                 android:id="@+id/nav_share"
