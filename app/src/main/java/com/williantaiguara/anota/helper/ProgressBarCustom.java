@@ -1,4 +1,4 @@
-package com.williantaiguara.anota.model;
+package com.williantaiguara.anota.helper;
 
 import android.view.View;
 import android.widget.ProgressBar;

@@ -34,7 +34,7 @@ import com.williantaiguara.anota.config.ConfiguracaoFirebase;
 import com.williantaiguara.anota.helper.Base64Custom;
 import com.williantaiguara.anota.helper.RecyclerItemClickListener;
 import com.williantaiguara.anota.model.Lembrete;
-import com.williantaiguara.anota.model.ProgressBarCustom;
+import com.williantaiguara.anota.helper.ProgressBarCustom;
 
 import java.util.ArrayList;
 import java.util.List;

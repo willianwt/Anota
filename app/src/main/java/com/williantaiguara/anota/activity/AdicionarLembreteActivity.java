@@ -9,16 +9,13 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.williantaiguara.anota.R;
 import com.williantaiguara.anota.model.Lembrete;
-import com.williantaiguara.anota.model.ProgressBarCustom;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

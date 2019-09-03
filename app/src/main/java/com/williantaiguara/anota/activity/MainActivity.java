@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .setAction("Action", null).show();
             }
         });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -70,12 +71,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -86,8 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
-            autenticacao.signOut();
-            finish();
+            logout();
         }
 
         return super.onOptionsItemSelected(item);
@@ -102,17 +102,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_add_curso) {
             Intent intent = new Intent(this, AdicionarCursoActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
-
         } else if (id == R.id.nav_lembretes) {
             Intent intent = new Intent(this, LembretesActivity.class);
             startActivity(intent);
+
+        } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_tools) {
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_logout) {
+            logout();
+            return true;
 
         }
 
@@ -125,5 +127,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+    }
+
+    private void logout(){
+        autenticacao.signOut();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 }

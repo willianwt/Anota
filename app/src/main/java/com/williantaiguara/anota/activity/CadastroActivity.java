@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.williantaiguara.anota.R;
 import com.williantaiguara.anota.config.ConfiguracaoFirebase;
 import com.williantaiguara.anota.helper.Base64Custom;
-import com.williantaiguara.anota.model.ProgressBarCustom;
+import com.williantaiguara.anota.helper.ProgressBarCustom;
 import com.williantaiguara.anota.model.Usuario;
 
 public class CadastroActivity extends AppCompatActivity {

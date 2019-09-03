@@ -9,13 +9,13 @@
             android:icon="@drawable/ic_add"
             android:title="@string/menu_adicionar" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
-        <item
             android:id="@+id/nav_lembretes"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_lembretes" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_gallery" />
         <item
             android:id="@+id/nav_tools"
             android:icon="@drawable/ic_menu_manage"
@@ -26,12 +26,12 @@
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/menu_share" />
+                android:icon="@drawable/baseline_perm_identity_24"
+                android:title="@string/meu_perfil" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_send" />
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_logout"
+                android:title="@string/action_logout" />
         </menu>
     </item>
 
