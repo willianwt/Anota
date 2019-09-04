@@ -7,6 +7,10 @@ import com.williantaiguara.anota.config.ConfiguracaoFirebase;
 import com.williantaiguara.anota.helper.Base64Custom;
 
 public class Disciplina {
+/*
+todo: pensar num nome melhor que envolva curso e disciplina
+ */
+
 
     private String nomeCurso;
     private String semestreCurso;
@@ -26,7 +30,7 @@ public class Disciplina {
                 .child(idUsuario)
                 .child("cursos")
                 .child(nomeCurso)
-                .child("\""+semestreCurso+"\"")
+                .child("S"+semestreCurso)
                 .push()
                 .setValue(this);
     }

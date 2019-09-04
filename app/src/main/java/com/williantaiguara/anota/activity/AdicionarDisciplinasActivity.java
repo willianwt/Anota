@@ -3,7 +3,6 @@ package com.williantaiguara.anota.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.williantaiguara.anota.R;
 import com.williantaiguara.anota.adapter.AdapterAdicionarDisciplinas;
-import com.williantaiguara.anota.helper.Base64Custom;
 import com.williantaiguara.anota.model.Disciplina;
 
 import java.util.ArrayList;
@@ -101,10 +99,13 @@ public class AdicionarDisciplinasActivity extends AppCompatActivity {
                 item.setEnabled(false);
                 try {
                     salvarCurso();
+
+                    if (salvarCurso()){
+                        abrirTelaPrincipal();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                abrirTelaPrincipal();
                //TODO: salvar e retornar ao menu principal ou ir para a tela do curso
                 item.setEnabled(true);
 
@@ -200,17 +201,25 @@ public class AdicionarDisciplinasActivity extends AppCompatActivity {
 
     }
 
-    public void salvarCurso(){
+    public boolean salvarCurso(){
 
+        if (!disciplinaList.isEmpty() || disciplinaList.size() != 0) {
+            for (Disciplina disciplinaNaLista : disciplinaList) {
+                disciplina = new Disciplina();
+                disciplina.setNomeDisciplina(disciplinaNaLista.getNomeDisciplina());
+                disciplina.setNomeProfessorDisciplina(disciplinaNaLista.getNomeProfessorDisciplina());
+                disciplina.setEmailProfessorDisciplina(disciplinaNaLista.getEmailProfessorDisciplina());
 
-        for (Disciplina disciplinaNaLista : disciplinaList){
-            disciplina = new Disciplina();
-            disciplina.setNomeDisciplina(disciplinaNaLista.getNomeDisciplina());
-            disciplina.setNomeProfessorDisciplina(disciplinaNaLista.getNomeProfessorDisciplina());
-            disciplina.setEmailProfessorDisciplina(disciplinaNaLista.getEmailProfessorDisciplina());
+                disciplina.salvarCurso(nomeCurso, semestre);
 
-            disciplina.salvarCurso(nomeCurso, semestre);
+            }
+            return true;
+        }else{
+            Toast.makeText(AdicionarDisciplinasActivity.this,
+                    "Adicione pelo menos uma disciplina..", Toast.LENGTH_SHORT).show();
+            return false;
         }
+
     }
 
     public void abrirTelaPrincipal() {

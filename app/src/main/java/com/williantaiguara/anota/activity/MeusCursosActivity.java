@@ -83,18 +83,14 @@ public class MeusCursosActivity extends AppCompatActivity {
         String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
         Log.i("idusuario", idUsuario);
         Query query = firebaseRef.child("usuarios").child(idUsuario).child("cursos");
-        Log.i("query", query.toString());
-        valueEventListenerLembretes = query.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //cursos.clear();
+                cursos.clear();
 
                 for (DataSnapshot dados: dataSnapshot.getChildren()){
                     Disciplina curso = dados.getValue(Disciplina.class);
                     curso.setKey(dados.getKey());
-                    curso.setSemestreCurso(dados.getChildren().toString());
-                    Log.i("semestre", curso.getSemestreCurso().toString());
-                    Log.i("curso", dados.getKey());
                     //TODO: na proxima activity, pegar os semestres do curso escolhido.
                     cursos.add(curso);
                 }
