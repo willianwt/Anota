@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
@@ -190,7 +191,6 @@ public class LembretesActivity extends AppCompatActivity {
                 lembretesRef = firebaseRef.child("usuarios")
                         .child(idUsuario)
                         .child("lembretes");
-
                 lembretesRef.child(lembrete.getKey()).removeValue();
                 Toast.makeText(getApplicationContext(), "Exclusão Confirmada!", Toast.LENGTH_SHORT).show();
                 adapterLembretes.notifyItemRemoved(position);

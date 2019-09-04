@@ -8,7 +8,8 @@ import com.williantaiguara.anota.helper.Base64Custom;
 
 public class Disciplina {
 /*
-todo: pensar num nome melhor que envolva curso e disciplina
+    todo: pensar num nome melhor que envolva curso e disciplina.
+    todo: o nome do curso não deve iniciar com número. criar um método para prevenir isso.
  */
 
 
@@ -29,9 +30,9 @@ todo: pensar num nome melhor que envolva curso e disciplina
         firebase.child("usuarios")
                 .child(idUsuario)
                 .child("cursos")
-                .child(nomeCurso)
-                .child("S"+semestreCurso)
-                .push()
+                .child("C:"+nomeCurso)
+                .child("S:"+semestreCurso)
+                .child("D:"+nomeDisciplina)
                 .setValue(this);
     }
 

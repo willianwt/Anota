@@ -70,14 +70,6 @@ public class AdicionarCursoActivity extends AppCompatActivity {
 
         tvAdicionarCurso.setAdapter(autoComplete);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     @Override
@@ -106,7 +98,7 @@ public class AdicionarCursoActivity extends AppCompatActivity {
     public void VerificarCampos(){
         if (!tvAdicionarCurso.getText().toString().isEmpty()){
             if (!semestre.getText().toString().isEmpty()){
-                Intent intent = new Intent(this, AdicionarDisciplinasActivity.class);
+                Intent intent = new Intent(this, MeusCursosActivity.class);
                 intent.putExtra("nomeCurso", tvAdicionarCurso.getText().toString());
                 intent.putExtra("semestre", semestre.getText().toString());
 
