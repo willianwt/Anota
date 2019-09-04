@@ -1,6 +1,7 @@
 package com.williantaiguara.anota.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +31,8 @@ import com.williantaiguara.anota.adapter.AdapterAdicionarDisciplinas;
 import com.williantaiguara.anota.adapter.AdapterCursos;
 import com.williantaiguara.anota.config.ConfiguracaoFirebase;
 import com.williantaiguara.anota.helper.Base64Custom;
+import com.williantaiguara.anota.helper.FormatadorDeCaracteresIniciais;
+import com.williantaiguara.anota.helper.RecyclerItemClickListener;
 import com.williantaiguara.anota.model.Disciplina;
 
 import org.apache.http.conn.ssl.StrictHostnameVerifier;
@@ -68,6 +72,36 @@ public class MeusCursosActivity extends AppCompatActivity {
         recyclerViewListaCursos.setHasFixedSize(true);
         recyclerViewListaCursos.setAdapter(adapterCursos);
 
+        //evento de clique
+        recyclerViewListaCursos.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                getApplicationContext(),
+                recyclerViewListaCursos,
+                new RecyclerItemClickListener.OnItemClickListener(){
+
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Disciplina curso = cursos.get(position);
+                        Log.i("curso", curso.getKey());
+                        Intent intent = new Intent(MeusCursosActivity.this, SemestresActivity.class);
+                        intent.putExtra("cursoEscolhido", curso.getKey());
+                        startActivity(intent);
+
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+
+                    }
+
+
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    }
+                }
+        ));
+
         swipe();
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -94,7 +128,7 @@ public class MeusCursosActivity extends AppCompatActivity {
 
                 for (DataSnapshot dados: dataSnapshot.getChildren()){
                     Disciplina curso = dados.getValue(Disciplina.class);
-                    curso.setKey(dados.getKey().substring(2));
+                    curso.setKey(FormatadorDeCaracteresIniciais.remove2char(dados.getKey()));
                     //TODO: na proxima activity, pegar os semestres do curso escolhido.
                     cursos.add(curso);
                 }
@@ -162,7 +196,7 @@ public class MeusCursosActivity extends AppCompatActivity {
                         .child("cursos");
                 Log.i("curso", curso.getKey());
 
-                listaCursosRef.child("C:"+curso.getKey()).removeValue();
+                listaCursosRef.child(FormatadorDeCaracteresIniciais.adicionaCharParaCurso(curso.getKey())).removeValue();
                 Toast.makeText(getApplicationContext(), "Exclusão Confirmada!", Toast.LENGTH_SHORT).show();
                 adapterCursos.notifyItemRemoved(position);
                 finish();
