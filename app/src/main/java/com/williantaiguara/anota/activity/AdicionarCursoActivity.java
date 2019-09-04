@@ -98,7 +98,7 @@ public class AdicionarCursoActivity extends AppCompatActivity {
     public void VerificarCampos(){
         if (!tvAdicionarCurso.getText().toString().isEmpty()){
             if (!semestre.getText().toString().isEmpty()){
-                Intent intent = new Intent(this, MeusCursosActivity.class);
+                Intent intent = new Intent(this, AdicionarDisciplinasActivity.class);
                 intent.putExtra("nomeCurso", tvAdicionarCurso.getText().toString());
                 intent.putExtra("semestre", semestre.getText().toString());
 

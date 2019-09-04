@@ -101,7 +101,7 @@ public class AdicionarDisciplinasActivity extends AppCompatActivity {
                     salvarCurso();
 
                     if (salvarCurso()){
-                        abrirTelaPrincipal();
+                        abrirTelaCursos();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -222,9 +222,9 @@ public class AdicionarDisciplinasActivity extends AppCompatActivity {
 
     }
 
-    public void abrirTelaPrincipal() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+    public void abrirTelaCursos() {
+        Intent intent = new Intent(this, MeusCursosActivity.class);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK); //Isto é usado para limpar todas as activities e deixar somente a que for aberta no aplicativo.
         startActivity(intent);
     }
 }
