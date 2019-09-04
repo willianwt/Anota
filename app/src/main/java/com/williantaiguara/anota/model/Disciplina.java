@@ -13,6 +13,7 @@ public class Disciplina {
     private String nomeDisciplina;
     private String nomeProfessorDisciplina;
     private String emailProfessorDisciplina;
+    private String key;
 
     public Disciplina() {
     }
@@ -25,7 +26,7 @@ public class Disciplina {
                 .child(idUsuario)
                 .child("cursos")
                 .child(nomeCurso)
-                .child(semestreCurso)
+                .child("\""+semestreCurso+"\"")
                 .push()
                 .setValue(this);
     }
@@ -74,5 +75,13 @@ public class Disciplina {
 
     public void setEmailProfessorDisciplina(String emailProfessorDisciplina) {
         this.emailProfessorDisciplina = emailProfessorDisciplina;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

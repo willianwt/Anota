@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                     }catch(FirebaseAuthInvalidCredentialsException e){
                         excecao = "Email e/ou senha incorretos!";
                     } catch (Exception e) {
-                        excecao = "Ocorreu um erro!" + e.getMessage();
+                        excecao = "Ocorreu um erro! Verifique se está conectado a internet.." + e.getMessage();
                         e.printStackTrace();
                     }
                     closeProgressBar();

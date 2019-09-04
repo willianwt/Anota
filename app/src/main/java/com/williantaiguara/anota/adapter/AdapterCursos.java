@@ -10,16 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.williantaiguara.anota.R;
-import com.williantaiguara.anota.model.Curso;
+import com.williantaiguara.anota.model.Disciplina;
 
 import java.util.List;
 
 public class AdapterCursos extends RecyclerView.Adapter<AdapterCursos.MyViewHolder> {
 
-    private List<Curso> cursoList;
+    private List<Disciplina> cursoList;
     private Context context;
 
-    public AdapterCursos(List<Curso> cursos, Context c){
+    public AdapterCursos(List<Disciplina> cursos, Context c){
         this.cursoList = cursos;
         this.context = c;
     }
@@ -36,7 +36,7 @@ public class AdapterCursos extends RecyclerView.Adapter<AdapterCursos.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Curso curso = cursoList.get(position);
+        Disciplina curso = cursoList.get(position);
 
         holder.nomeCurso.setText(curso.getKey());
     }

@@ -25,7 +25,9 @@ import com.williantaiguara.anota.adapter.AdapterAdicionarDisciplinas;
 import com.williantaiguara.anota.adapter.AdapterCursos;
 import com.williantaiguara.anota.config.ConfiguracaoFirebase;
 import com.williantaiguara.anota.helper.Base64Custom;
-import com.williantaiguara.anota.model.Curso;
+import com.williantaiguara.anota.model.Disciplina;
+
+import org.apache.http.conn.ssl.StrictHostnameVerifier;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,9 +39,12 @@ public class MeusCursosActivity extends AppCompatActivity {
     private AdapterCursos adapterCursos;
     private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
     private DatabaseReference listaCursosRef;
-    private Curso curso;
+    private Disciplina curso;
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-    private List<Curso> cursos = new ArrayList<>();
+    private List<Disciplina> cursos = new ArrayList<>();
+    private ValueEventListener valueEventListenerLembretes;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,17 +79,22 @@ public class MeusCursosActivity extends AppCompatActivity {
 
     public void recuperarCursos(){
         String emailUsuario = autenticacao.getCurrentUser().getEmail();
+        Log.i("autenticacao", emailUsuario);
         String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
-
+        Log.i("idusuario", idUsuario);
         Query query = firebaseRef.child("usuarios").child(idUsuario).child("cursos");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        Log.i("query", query.toString());
+        valueEventListenerLembretes = query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                cursos.clear();
+                //cursos.clear();
 
                 for (DataSnapshot dados: dataSnapshot.getChildren()){
-                    Curso curso = dados.getValue(Curso.class);
+                    Disciplina curso = dados.getValue(Disciplina.class);
                     curso.setKey(dados.getKey());
+                    curso.setSemestreCurso(dados.getChildren().toString());
+                    Log.i("semestre", curso.getSemestreCurso().toString());
+                    Log.i("curso", dados.getKey());
                     //TODO: na proxima activity, pegar os semestres do curso escolhido.
                     cursos.add(curso);
                 }
@@ -103,5 +113,6 @@ public class MeusCursosActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         recuperarCursos();
+
     }
 }
