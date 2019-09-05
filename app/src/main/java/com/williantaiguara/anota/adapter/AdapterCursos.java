@@ -39,6 +39,7 @@ public class AdapterCursos extends RecyclerView.Adapter<AdapterCursos.MyViewHold
         Disciplina curso = cursoList.get(position);
 
         holder.nomeCurso.setText(curso.getKey());
+
     }
 
     @Override

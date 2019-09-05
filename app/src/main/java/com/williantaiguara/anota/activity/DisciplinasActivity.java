@@ -34,58 +34,56 @@ import com.williantaiguara.anota.model.Disciplina;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SemestresActivity extends AppCompatActivity {
-
+public class DisciplinasActivity extends AppCompatActivity {
+    private String semestreEscolhido;
     private String cursoEscolhido;
     private TextView txCursoEscolhido;
-    private RecyclerView recyclerViewListaSemestres;
-    private AdapterCursos adapterSemestres;
+    private RecyclerView recyclerViewListaDisciplinas;
+    private AdapterCursos adapterDisciplinas;
     private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
     private DatabaseReference listaCursosRef;
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-    private Disciplina semestre;
-    private List<Disciplina> semestres = new ArrayList<>();
+    private Disciplina disciplina;
+    private List<Disciplina> disciplinas = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_semestres);
+        setContentView(R.layout.activity_disciplinas);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Semestre");
         setSupportActionBar(toolbar);
 
-        txCursoEscolhido = findViewById(R.id.txCursoEscolhido);
+        txCursoEscolhido = findViewById(R.id.txSemestreEscolhido);
 
-        recyclerViewListaSemestres = findViewById(R.id.recyclerViewListaSemestre);
+        recyclerViewListaDisciplinas = findViewById(R.id.recyclerViewListaDisciplinas);
 
-        adapterSemestres = new AdapterCursos(semestres, this);
+        adapterDisciplinas = new AdapterCursos(disciplinas, this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerViewListaSemestres.setLayoutManager(layoutManager);
-        recyclerViewListaSemestres.setHasFixedSize(true);
-        recyclerViewListaSemestres.setAdapter(adapterSemestres);
+        recyclerViewListaDisciplinas.setLayoutManager(layoutManager);
+        recyclerViewListaDisciplinas.setHasFixedSize(true);
+        recyclerViewListaDisciplinas.setAdapter(adapterDisciplinas);
 
 
         //recuperar dados da activity adicionar curso
         Bundle dados = getIntent().getExtras();
+        semestreEscolhido = dados.getString("semestreEscolhido");
         cursoEscolhido = dados.getString("cursoEscolhido");
 
-        txCursoEscolhido.setText("Qual semestre deseja visualizar para \n"+cursoEscolhido+"?");
-
+        txCursoEscolhido.setText("Estas são as disciplinas do \n"+semestreEscolhido+"º semestre:");
 
         //evento de clique
-        recyclerViewListaSemestres.addOnItemTouchListener(
+        recyclerViewListaDisciplinas.addOnItemTouchListener(
                 new RecyclerItemClickListener(
                         getApplicationContext(),
-                        recyclerViewListaSemestres,
+                        recyclerViewListaDisciplinas,
                         new RecyclerItemClickListener.OnItemClickListener(){
 
                             @Override
                             public void onItemClick(View view, int position) {
-                                Disciplina semestre = semestres.get(position);
-                                Intent intent = new Intent(SemestresActivity.this, DisciplinasActivity.class);
-                                intent.putExtra("semestreEscolhido", semestre.getKey());
-                                intent.putExtra("cursoEscolhido", cursoEscolhido);
+                                Disciplina disciplina = disciplinas.get(position);
+                                Intent intent = new Intent(DisciplinasActivity.this, DisciplinaSelecionadaActivity.class);
+                                intent.putExtra("nomeDisciplina", disciplina.getNomeDisciplina());
                                 startActivity(intent);
 
                             }
@@ -103,7 +101,8 @@ public class SemestresActivity extends AppCompatActivity {
                         }
                 ));
 
-        //todo: alterar para adicionar um novo semestre caso o usuario queira
+        //todo: alterar para adicionar mais disciplinas neste curso e semestre
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,26 +114,27 @@ public class SemestresActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
-    public void recuperarSemestres(){
+    public void recuperarDisciplinas(){
         String emailUsuario = autenticacao.getCurrentUser().getEmail();
         Log.i("autenticacao", emailUsuario);
         String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
         Log.i("idusuario", idUsuario);
         Query query = firebaseRef.child("usuarios").child(idUsuario)
-                                                    .child("cursos")
-                                                    .child(FormatadorDeCaracteresIniciais.adicionaCharParaCurso(Base64Custom.CodificarBase64(cursoEscolhido)));
+                .child("cursos")
+                .child(FormatadorDeCaracteresIniciais.adicionaCharParaCurso(Base64Custom.CodificarBase64(cursoEscolhido)))
+                .child(FormatadorDeCaracteresIniciais.adicionaCharParaSemestre(semestreEscolhido));
         Log.i("query", query.toString());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                semestres.clear();
+                disciplinas.clear();
 
                 for (DataSnapshot dados: dataSnapshot.getChildren()){
                     Disciplina semestre = dados.getValue(Disciplina.class);
                     semestre.setKey(FormatadorDeCaracteresIniciais.remove2char(dados.getKey()));
-                    semestres.add(semestre);
+                    disciplinas.add(semestre);
                 }
-                adapterSemestres.notifyDataSetChanged();
+                adapterDisciplinas.notifyDataSetChanged();
 
 
             }
@@ -149,6 +149,7 @@ public class SemestresActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        recuperarSemestres();
+        recuperarDisciplinas();
     }
+
 }

@@ -6,11 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity.SemestresActivity"
-    tools:showIn="@layout/activity_semestres">
-
+    tools:context=".activity.DisciplinasActivity"
+    tools:showIn="@layout/activity_disciplinas">
     <TextView
-        android:id="@+id/txCursoEscolhido"
+        android:id="@+id/txSemestreEscolhido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/semestre_do_curso_x"
@@ -19,7 +18,7 @@
         android:textSize="20sp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewListaSemestre"
+        android:id="@+id/recyclerViewListaDisciplinas"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

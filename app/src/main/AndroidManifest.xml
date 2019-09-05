@@ -10,6 +10,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activity.DisciplinaSelecionadaActivity"
+            android:label="@string/title_activity_disciplina_selecionada"
+            android:parentActivityName=".activity.DisciplinasActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.williantaiguara.anota.activity.DisciplinasActivity" />
+        </activity>
+        <activity
+            android:name=".activity.DisciplinasActivity"
+            android:label="@string/title_activity_disciplinas"
+            android:parentActivityName=".activity.SemestresActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.williantaiguara.anota.activity.SemestresActivity" />
+        </activity>
+        <activity
             android:name=".activity.SemestresActivity"
             android:label="@string/title_activity_semestres"
             android:parentActivityName=".activity.MeusCursosActivity"

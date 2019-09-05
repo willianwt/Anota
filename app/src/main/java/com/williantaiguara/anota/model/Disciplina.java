@@ -30,7 +30,7 @@ public class Disciplina {
         firebase.child("usuarios")
                 .child(idUsuario)
                 .child("cursos")
-                .child("C:"+nomeCurso)
+                .child("C:"+Base64Custom.CodificarBase64(nomeCurso))
                 .child("S:"+semestreCurso)
                 .child("D:"+nomeDisciplina)
                 .setValue(this);

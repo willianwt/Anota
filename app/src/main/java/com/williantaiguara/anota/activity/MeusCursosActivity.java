@@ -27,7 +27,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.williantaiguara.anota.R;
-import com.williantaiguara.anota.adapter.AdapterAdicionarDisciplinas;
 import com.williantaiguara.anota.adapter.AdapterCursos;
 import com.williantaiguara.anota.config.ConfiguracaoFirebase;
 import com.williantaiguara.anota.helper.Base64Custom;
@@ -35,10 +34,8 @@ import com.williantaiguara.anota.helper.FormatadorDeCaracteresIniciais;
 import com.williantaiguara.anota.helper.RecyclerItemClickListener;
 import com.williantaiguara.anota.model.Disciplina;
 
-import org.apache.http.conn.ssl.StrictHostnameVerifier;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MeusCursosActivity extends AppCompatActivity {
@@ -50,7 +47,6 @@ public class MeusCursosActivity extends AppCompatActivity {
     private Disciplina curso;
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private List<Disciplina> cursos = new ArrayList<>();
-    private ValueEventListener valueEventListenerLembretes;
 
 
 
@@ -82,7 +78,6 @@ public class MeusCursosActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(View view, int position) {
                         Disciplina curso = cursos.get(position);
-                        Log.i("curso", curso.getKey());
                         Intent intent = new Intent(MeusCursosActivity.this, SemestresActivity.class);
                         intent.putExtra("cursoEscolhido", curso.getKey());
                         startActivity(intent);
@@ -117,9 +112,7 @@ public class MeusCursosActivity extends AppCompatActivity {
 
     public void recuperarCursos(){
         String emailUsuario = autenticacao.getCurrentUser().getEmail();
-        Log.i("autenticacao", emailUsuario);
         String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
-        Log.i("idusuario", idUsuario);
         Query query = firebaseRef.child("usuarios").child(idUsuario).child("cursos");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -128,8 +121,7 @@ public class MeusCursosActivity extends AppCompatActivity {
 
                 for (DataSnapshot dados: dataSnapshot.getChildren()){
                     Disciplina curso = dados.getValue(Disciplina.class);
-                    curso.setKey(FormatadorDeCaracteresIniciais.remove2char(dados.getKey()));
-                    //TODO: na proxima activity, pegar os semestres do curso escolhido.
+                    curso.setKey(Base64Custom.DecodificarBase64(FormatadorDeCaracteresIniciais.remove2char(dados.getKey())));
                     cursos.add(curso);
                 }
                 adapterCursos.notifyDataSetChanged();
