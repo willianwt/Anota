@@ -30,7 +30,6 @@ import com.williantaiguara.anota.R;
 import com.williantaiguara.anota.adapter.AdapterCursos;
 import com.williantaiguara.anota.config.ConfiguracaoFirebase;
 import com.williantaiguara.anota.helper.Base64Custom;
-import com.williantaiguara.anota.helper.FormatadorDeCaracteresIniciais;
 import com.williantaiguara.anota.helper.RecyclerItemClickListener;
 import com.williantaiguara.anota.model.Disciplina;
 
@@ -121,7 +120,7 @@ public class MeusCursosActivity extends AppCompatActivity {
 
                 for (DataSnapshot dados: dataSnapshot.getChildren()){
                     Disciplina curso = dados.getValue(Disciplina.class);
-                    curso.setKey(Base64Custom.DecodificarBase64(FormatadorDeCaracteresIniciais.remove2char(dados.getKey())));
+                    curso.setKey(Base64Custom.DecodificarBase64(dados.getKey()));
                     cursos.add(curso);
                 }
                 adapterCursos.notifyDataSetChanged();
@@ -188,7 +187,7 @@ public class MeusCursosActivity extends AppCompatActivity {
                         .child("cursos");
                 Log.i("curso", curso.getKey());
 
-                listaCursosRef.child(FormatadorDeCaracteresIniciais.adicionaCharParaCurso(curso.getKey())).removeValue();
+                listaCursosRef.child(curso.getKey()).removeValue();
                 Toast.makeText(getApplicationContext(), "Exclusão Confirmada!", Toast.LENGTH_SHORT).show();
                 adapterCursos.notifyItemRemoved(position);
                 finish();

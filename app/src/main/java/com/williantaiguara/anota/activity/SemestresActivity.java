@@ -27,7 +27,6 @@ import com.williantaiguara.anota.R;
 import com.williantaiguara.anota.adapter.AdapterCursos;
 import com.williantaiguara.anota.config.ConfiguracaoFirebase;
 import com.williantaiguara.anota.helper.Base64Custom;
-import com.williantaiguara.anota.helper.FormatadorDeCaracteresIniciais;
 import com.williantaiguara.anota.helper.RecyclerItemClickListener;
 import com.williantaiguara.anota.model.Disciplina;
 
@@ -117,13 +116,10 @@ public class SemestresActivity extends AppCompatActivity {
 
     public void recuperarSemestres(){
         String emailUsuario = autenticacao.getCurrentUser().getEmail();
-        Log.i("autenticacao", emailUsuario);
         String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
-        Log.i("idusuario", idUsuario);
         Query query = firebaseRef.child("usuarios").child(idUsuario)
                                                     .child("cursos")
-                                                    .child(FormatadorDeCaracteresIniciais.adicionaCharParaCurso(Base64Custom.CodificarBase64(cursoEscolhido)));
-        Log.i("query", query.toString());
+                                                    .child(Base64Custom.CodificarBase64(cursoEscolhido));
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -131,7 +127,7 @@ public class SemestresActivity extends AppCompatActivity {
 
                 for (DataSnapshot dados: dataSnapshot.getChildren()){
                     Disciplina semestre = dados.getValue(Disciplina.class);
-                    semestre.setKey(FormatadorDeCaracteresIniciais.remove2char(dados.getKey()));
+                    semestre.setKey(Base64Custom.DecodificarBase64(dados.getKey()));
                     semestres.add(semestre);
                 }
                 adapterSemestres.notifyDataSetChanged();

@@ -27,14 +27,13 @@ import com.williantaiguara.anota.R;
 import com.williantaiguara.anota.adapter.AdapterCursos;
 import com.williantaiguara.anota.config.ConfiguracaoFirebase;
 import com.williantaiguara.anota.helper.Base64Custom;
-import com.williantaiguara.anota.helper.FormatadorDeCaracteresIniciais;
 import com.williantaiguara.anota.helper.RecyclerItemClickListener;
 import com.williantaiguara.anota.model.Disciplina;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DisciplinasActivity extends AppCompatActivity {
+public class DisciplinasActivity extends AppCompatActivity{
     private String semestreEscolhido;
     private String cursoEscolhido;
     private TextView txCursoEscolhido;
@@ -51,6 +50,7 @@ public class DisciplinasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disciplinas);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Disciplinas");
         setSupportActionBar(toolbar);
 
         txCursoEscolhido = findViewById(R.id.txSemestreEscolhido);
@@ -83,7 +83,9 @@ public class DisciplinasActivity extends AppCompatActivity {
                             public void onItemClick(View view, int position) {
                                 Disciplina disciplina = disciplinas.get(position);
                                 Intent intent = new Intent(DisciplinasActivity.this, DisciplinaSelecionadaActivity.class);
-                                intent.putExtra("nomeDisciplina", disciplina.getNomeDisciplina());
+                                disciplina.setSemestreCurso(semestreEscolhido);
+                                disciplina.setNomeCurso(cursoEscolhido);
+                                intent.putExtra("disciplina", disciplina);
                                 startActivity(intent);
 
                             }
@@ -116,14 +118,11 @@ public class DisciplinasActivity extends AppCompatActivity {
 
     public void recuperarDisciplinas(){
         String emailUsuario = autenticacao.getCurrentUser().getEmail();
-        Log.i("autenticacao", emailUsuario);
         String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
-        Log.i("idusuario", idUsuario);
         Query query = firebaseRef.child("usuarios").child(idUsuario)
                 .child("cursos")
-                .child(FormatadorDeCaracteresIniciais.adicionaCharParaCurso(Base64Custom.CodificarBase64(cursoEscolhido)))
-                .child(FormatadorDeCaracteresIniciais.adicionaCharParaSemestre(semestreEscolhido));
-        Log.i("query", query.toString());
+                .child(Base64Custom.CodificarBase64(cursoEscolhido))
+                .child(Base64Custom.CodificarBase64(semestreEscolhido));
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -131,7 +130,7 @@ public class DisciplinasActivity extends AppCompatActivity {
 
                 for (DataSnapshot dados: dataSnapshot.getChildren()){
                     Disciplina semestre = dados.getValue(Disciplina.class);
-                    semestre.setKey(FormatadorDeCaracteresIniciais.remove2char(dados.getKey()));
+                    semestre.setKey(Base64Custom.DecodificarBase64(dados.getKey()));
                     disciplinas.add(semestre);
                 }
                 adapterDisciplinas.notifyDataSetChanged();

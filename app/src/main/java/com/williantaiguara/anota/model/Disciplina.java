@@ -6,7 +6,9 @@ import com.google.firebase.database.Exclude;
 import com.williantaiguara.anota.config.ConfiguracaoFirebase;
 import com.williantaiguara.anota.helper.Base64Custom;
 
-public class Disciplina {
+import java.io.Serializable;
+
+public class Disciplina implements Serializable {
 /*
     todo: pensar num nome melhor que envolva curso e disciplina.
     todo: o nome do curso não deve iniciar com número. criar um método para prevenir isso.
@@ -30,9 +32,9 @@ public class Disciplina {
         firebase.child("usuarios")
                 .child(idUsuario)
                 .child("cursos")
-                .child("C:"+Base64Custom.CodificarBase64(nomeCurso))
-                .child("S:"+semestreCurso)
-                .child("D:"+nomeDisciplina)
+                .child(Base64Custom.CodificarBase64(nomeCurso))
+                .child(Base64Custom.CodificarBase64(semestreCurso))
+                .child(Base64Custom.CodificarBase64(nomeDisciplina))
                 .setValue(this);
     }
 
