@@ -8,4 +8,9 @@
     tools:context=".activity.DisciplinaSelecionadaActivity"
     tools:showIn="@layout/activity_disciplina_selecionada">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="127dp"
+        tools:layout_editor_absoluteY="105dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
