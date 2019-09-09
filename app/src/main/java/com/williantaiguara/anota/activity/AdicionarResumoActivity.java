@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.williantaiguara.anota.R;
+import com.williantaiguara.anota.model.DateCustom;
 import com.williantaiguara.anota.model.Disciplina;
 import com.williantaiguara.anota.model.Lembrete;
 
@@ -72,12 +73,17 @@ public class AdicionarResumoActivity extends AppCompatActivity {
 
     private void SalvarLembrete(){
         resumo = new Lembrete();
+        resumo.setTitulo(tituloResumo.getText().toString());
+        resumo.setConteudo(conteudoResumo.getText().toString());
+        resumo.setData(DateCustom.dataAtual());
+        Log.i("data", resumo.getData());
+
 
 
         resumo.salvarResumo();
 
         finish();
-        Toast.makeText(this, "Lembrete adicionado com Sucesso!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Resumo adicionado com Sucesso!", Toast.LENGTH_SHORT).show();
     }
     public void VerificarCampos(){
         if (!tituloResumo.getText().toString().isEmpty()){

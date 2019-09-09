@@ -1,41 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.AdicionarResumoActivity"
-    >
+    tools:context=".activity.AdicionarResumoActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarAdcResumo"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"/>
+        android:background="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarAdcResumo">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etTituloResumo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Título" />
+            android:hint="Título"
+            android:maxLength="100" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etConteudoResumo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="top"
-            android:hint="Conteúdo"
+            android:layout_height="wrap_content"
+            android:gravity="start|top"
+            android:hint="Conteúdo - Máximo de 2000 caracteres"
             android:inputType="textMultiLine"
+            android:maxLength="2000"
             android:minLines="10" />
+
     </com.google.android.material.textfield.TextInputLayout>
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
