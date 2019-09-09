@@ -1,5 +1,6 @@
 package com.williantaiguara.anota.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,15 +38,20 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
 
 
         //todo: este botao vai servir para adicionar resumos, notas e faltas.
-        FloatingActionButton fab = findViewById(R.id.fab);
+        /*FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
+    public void adicionarResumo(View view){
+        Intent intent = new Intent(this, AdicionarResumoActivity.class);
+        intent.putExtra("disciplina", disciplina);
+        startActivity(intent);
+    }
 }

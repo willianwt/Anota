@@ -87,14 +87,14 @@ public class AdicionarDisciplinasActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_adicionar_disciplinas, menu);
+        getMenuInflater().inflate(R.menu.menu_adicionar, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.concluir_adicionar_disciplinas){
+        if (id == R.id.salvar){
             try{
                 item.setEnabled(false);
                 try {
@@ -106,7 +106,7 @@ public class AdicionarDisciplinasActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-               //TODO: salvar e retornar ao menu principal ou ir para a tela do curso
+               //TODO: salvarLembrete e retornar ao menu principal ou ir para a tela do curso
                 item.setEnabled(true);
 
             }catch (Exception e){ //TODO: TRATAR ERROS

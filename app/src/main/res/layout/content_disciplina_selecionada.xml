@@ -8,9 +8,12 @@
     tools:context=".activity.DisciplinaSelecionadaActivity"
     tools:showIn="@layout/activity_disciplina_selecionada">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="127dp"
-        tools:layout_editor_absoluteY="105dp" />
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="217dp"
+        tools:layout_editor_absoluteY="244dp">
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

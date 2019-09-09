@@ -66,14 +66,14 @@ public class AdicionarLembreteActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_adicionar_lembrete, menu);
+        getMenuInflater().inflate(R.menu.menu_adicionar, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.salvar_lembrete){
+        if (id == R.id.salvar){
             try{
                 item.setEnabled(false);
                 VerificarCampos();
@@ -126,7 +126,7 @@ public class AdicionarLembreteActivity extends AppCompatActivity {
         lembrete.setData(dataLembrete.getText().toString());
         lembrete.setConteudo(conteudoLembrete.getText().toString());
 
-        lembrete.salvar();
+        lembrete.salvarLembrete();
 
         finish();
         Toast.makeText(this, "Lembrete adicionado com Sucesso!", Toast.LENGTH_SHORT).show();

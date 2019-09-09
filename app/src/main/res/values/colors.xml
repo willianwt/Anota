@@ -6,5 +6,6 @@
     <color name="darkGray">#353434</color>
     <color name="yellow">#FF9800</color>
     <color name="fab_blue">#290085</color>
+    <color name="fab_dark_blue">#210068</color>
 
 </resources>

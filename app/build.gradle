@@ -47,6 +47,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:21.0.0'
     implementation 'com.google.firebase:firebase-storage:19.0.0'
 
+    //floating action button
+    implementation 'com.github.clans:fab:1.6.4'
+
+
     //material intro
     implementation 'com.heinrichreimersoftware:material-intro:master-SNAPSHOT'
 

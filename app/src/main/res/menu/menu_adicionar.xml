@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/salvar_lembrete"
+        android:id="@+id/salvar"
         android:icon="@drawable/mi_ic_finish"
         android:title="Salvar"
         android:visible="true"

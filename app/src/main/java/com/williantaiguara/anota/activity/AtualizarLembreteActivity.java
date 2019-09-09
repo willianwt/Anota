@@ -2,12 +2,10 @@ package com.williantaiguara.anota.activity;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -75,14 +73,14 @@ public class AtualizarLembreteActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_atualizar_lembrete, menu);
+        getMenuInflater().inflate(R.menu.menu_adicionar, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.salvar_lembrete){
+        if (id == R.id.salvar){
             try{
                 item.setEnabled(false);
                 AtualizarLembrete();
@@ -138,6 +136,6 @@ public class AtualizarLembreteActivity extends AppCompatActivity {
         lembrete.setConteudo(conteudoLembrete.getText().toString());
         lembrete.setKey(keyLembrete);
 
-        lembrete.atualizar();
+        lembrete.atualizarLembrete();
     }
 }

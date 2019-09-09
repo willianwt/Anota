@@ -38,16 +38,15 @@ public class AdapterLembretes extends RecyclerView.Adapter<AdapterLembretes.MyVi
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Lembrete lembrete = lembreteList.get(position);
 
+
         holder.titulo.setText(lembrete.getTitulo());
         List<String> dataSeparada = null;
-        if (dataSeparada != null){
+
             dataSeparada = Arrays.asList(lembrete.getData().split("-"));
             Collections.reverse(dataSeparada);
             String dataFormatada = TextUtils.join("/", dataSeparada);
             holder.data.setText(dataFormatada);
-        }else{
-            holder.data.setText("");
-        }
+
 
         if(lembrete.getConteudo() != null && lembrete.getConteudo().length() > 50){
             String resumo = lembrete.getConteudo();
