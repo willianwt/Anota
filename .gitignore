@@ -80,3 +80,13 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+*.properties
+app/.idea/codeStyles/Project.xml
+app/.idea/gradle.xml
+app/.idea/misc.xml
+app/.idea/modules.xml
+app/.idea/runConfigurations.xml
+app/.idea/workspace.xml
+app/gradle/wrapper/gradle-wrapper.jar
+app/gradlew
+app/gradlew.bat
