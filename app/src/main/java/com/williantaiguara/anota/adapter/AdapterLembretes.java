@@ -22,7 +22,7 @@ public class AdapterLembretes extends RecyclerView.Adapter<AdapterLembretes.MyVi
     private List<Lembrete> lembreteList;
     private Context context;
 
-    public AdapterLembretes(List<Lembrete> lembretes, Context c){
+    public AdapterLembretes(List<Lembrete> lembretes, Context c) {
         this.lembreteList = lembretes;
         this.context = c;
     }
@@ -42,17 +42,17 @@ public class AdapterLembretes extends RecyclerView.Adapter<AdapterLembretes.MyVi
         holder.titulo.setText(lembrete.getTitulo());
         List<String> dataSeparada = null;
 
-            dataSeparada = Arrays.asList(lembrete.getData().split("-"));
-            Collections.reverse(dataSeparada);
-            String dataFormatada = TextUtils.join("/", dataSeparada);
-            holder.data.setText(dataFormatada);
+        dataSeparada = Arrays.asList(lembrete.getData().split("-"));
+        Collections.reverse(dataSeparada);
+        String dataFormatada = TextUtils.join("/", dataSeparada);
+        holder.data.setText(dataFormatada);
 
 
-        if(lembrete.getConteudo() != null && lembrete.getConteudo().length() > 50){
+        if (lembrete.getConteudo() != null && lembrete.getConteudo().length() > 50) {
             String resumo = lembrete.getConteudo();
             resumo = resumo.substring(0, 50) + "...";
             holder.resumo.setText(resumo);
-        }else {
+        } else {
             holder.resumo.setText(lembrete.getConteudo());
         }
     }
@@ -66,7 +66,7 @@ public class AdapterLembretes extends RecyclerView.Adapter<AdapterLembretes.MyVi
 
         TextView titulo, resumo, data;
 
-        public MyViewHolder(@NonNull View itemView){
+        public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             titulo = itemView.findViewById(R.id.adapterTituloListaLembretes);

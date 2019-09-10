@@ -12,9 +12,13 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".activity.AdicionarResumoActivity"
+            android:name=".activity.AtualizarResumoActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"></activity>
+        <activity
+            android:name=".activity.AdicionarResumoActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.DisciplinaSelecionadaActivity"
             android:label="@string/title_activity_disciplina_selecionada"

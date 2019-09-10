@@ -1,5 +1,6 @@
 package com.williantaiguara.anota.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -7,14 +8,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,9 +33,11 @@ import com.williantaiguara.anota.adapter.AdapterListaResumos;
 import com.williantaiguara.anota.config.ConfiguracaoFirebase;
 import com.williantaiguara.anota.helper.Base64Custom;
 import com.williantaiguara.anota.helper.ProgressBarCustom;
+import com.williantaiguara.anota.helper.RecyclerItemClickListener;
 import com.williantaiguara.anota.model.Disciplina;
 import com.williantaiguara.anota.model.Lembrete;
 
+import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +46,7 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
     private Disciplina disciplina;
     private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
     private DatabaseReference resumosRef;
+    private Lembrete resumo;
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private ValueEventListener valueEventListenerResumos;
     private AdapterListaResumos adapterListaResumos;
@@ -76,9 +84,36 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
         recyclerViewListaResumos.setHasFixedSize(true);
         recyclerViewListaResumos.setAdapter(adapterListaResumos);
         recyclerViewListaResumos.scrollToPosition(resumos.size() - 1);
-
-
         recyclerViewListaResumos.addItemDecoration(new DividerItemDecoration(recyclerViewListaResumos.getContext(), DividerItemDecoration.VERTICAL));
+
+        //evento de clique
+        recyclerViewListaResumos.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        getApplicationContext(),
+                        recyclerViewListaResumos,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                Lembrete resumo = resumos.get(position);
+                                Intent intent = new Intent(DisciplinaSelecionadaActivity.this, AtualizarResumoActivity.class);
+                                intent.putExtra("resumo", resumo);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+
+                            }
+
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                            }
+                        }
+                )
+        );
+
+        swipe();
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
@@ -115,6 +150,67 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void excluirResumo(final RecyclerView.ViewHolder viewHolder){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+        alertDialog.setTitle("Excluir Resumo:");
+        alertDialog.setMessage("Tem certeza que deseja excluir esse lembrete?");
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                int position = viewHolder.getAdapterPosition();
+                resumo = resumos.get(position);
+
+                String emailUsuario = autenticacao.getCurrentUser().getEmail();
+                String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
+                resumosRef = firebaseRef.child("usuarios")
+                        .child(idUsuario)
+                        .child("resumos");
+                resumosRef.child(resumo.getKey()).removeValue();
+                Toast.makeText(getApplicationContext(), "Exclusão Confirmada!", Toast.LENGTH_SHORT).show();
+                adapterListaResumos.notifyItemRemoved(position);
+
+            }
+        });
+        alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(DisciplinaSelecionadaActivity.this, "Exclusão Cancelada!", Toast.LENGTH_SHORT).show();
+                adapterListaResumos.notifyDataSetChanged();
+
+            }
+        });
+
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+
+    }
+
+    public void swipe(){
+
+        ItemTouchHelper.Callback itemTouch = new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                int dragFlags = ItemTouchHelper.ACTION_STATE_IDLE;
+                int swypeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+                return makeMovementFlags(dragFlags, swypeFlags);
+            }
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                excluirResumo(viewHolder);
+            }
+        };
+
+        new ItemTouchHelper(itemTouch).attachToRecyclerView(recyclerViewListaResumos);
     }
 
     @Override

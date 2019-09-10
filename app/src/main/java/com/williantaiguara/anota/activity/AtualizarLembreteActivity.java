@@ -36,7 +36,7 @@ public class AtualizarLembreteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atualizar_lembrete);
         Toolbar toolbar = findViewById(R.id.toolbarAtualizarLembrete);
-        toolbar.setTitle("Adiconar Lembrete");
+        toolbar.setTitle("Atualizar Lembrete");
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

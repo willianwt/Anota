@@ -52,6 +52,17 @@ public class Lembrete implements Serializable {
                 .setValue(this);
     }
 
+    public void  atualizarResumo(){
+        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        DatabaseReference firebase = ConfiguracaoFirebase.getFirebaseDatabase();
+        String idUsuario = Base64Custom.CodificarBase64(autenticacao.getCurrentUser().getEmail());
+        firebase.child("usuarios")
+                .child(idUsuario)
+                .child("resumos")
+                .child(key)
+                .setValue(this);
+    }
+
     @Exclude
     public String getKey() {
         return key;
