@@ -97,6 +97,7 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
                                 Lembrete resumo = resumos.get(position);
                                 Intent intent = new Intent(DisciplinaSelecionadaActivity.this, AtualizarResumoActivity.class);
                                 intent.putExtra("resumo", resumo);
+                                intent.putExtra("disciplina", disciplina);
                                 startActivity(intent);
                             }
 
@@ -127,7 +128,13 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
         String emailUsuario = autenticacao.getCurrentUser().getEmail();
         String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
 
-        Query query = firebaseRef.child("usuarios").child(idUsuario).child("resumos").orderByChild("data");
+        Query query = firebaseRef.child("usuarios")
+                                .child(idUsuario)
+                                .child("cursos")
+                                .child(Base64Custom.CodificarBase64(disciplina.getNomeCurso()))
+                                .child(Base64Custom.CodificarBase64(disciplina.getSemestreCurso()))
+                                .child(Base64Custom.CodificarBase64(disciplina.getNomeDisciplina()))
+                                .child("resumos").orderByChild("data");
         valueEventListenerResumos = query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -139,7 +146,9 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
                     resumo.setKey(dados.getKey());
                     resumos.add(resumo);
                 }
-                recyclerViewListaResumos.smoothScrollToPosition(recyclerViewListaResumos.getAdapter().getItemCount() -1);
+                if (recyclerViewListaResumos.getAdapter().getItemCount() != 0) {
+                    recyclerViewListaResumos.smoothScrollToPosition(recyclerViewListaResumos.getAdapter().getItemCount() - 1);
+                }
                 adapterListaResumos.notifyDataSetChanged();
                 //ProgressBarCustom.closeProgressBar(progressBar);
                 //nenhumLembreteEncontrado();
@@ -168,6 +177,10 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
                 String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
                 resumosRef = firebaseRef.child("usuarios")
                         .child(idUsuario)
+                        .child("cursos")
+                        .child(Base64Custom.CodificarBase64(disciplina.getNomeCurso()))
+                        .child(Base64Custom.CodificarBase64(disciplina.getSemestreCurso()))
+                        .child(Base64Custom.CodificarBase64(disciplina.getNomeDisciplina()))
                         .child("resumos");
                 resumosRef.child(resumo.getKey()).removeValue();
                 Toast.makeText(getApplicationContext(), "Exclusão Confirmada!", Toast.LENGTH_SHORT).show();

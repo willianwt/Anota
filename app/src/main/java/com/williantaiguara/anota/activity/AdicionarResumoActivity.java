@@ -100,7 +100,9 @@ public class AdicionarResumoActivity extends AppCompatActivity {
         resumo.setData(DateCustom.dataAtual());
         Log.i("data", resumo.getData());
 
-        resumo.salvarResumo();
+        resumo.salvarResumo(Base64Custom.CodificarBase64(disciplina.getNomeCurso()),
+                            Base64Custom.CodificarBase64(disciplina.getSemestreCurso()),
+                            Base64Custom.CodificarBase64(disciplina.getNomeDisciplina()));
 
         finish();
         Toast.makeText(this, "Resumo adicionado com Sucesso!", Toast.LENGTH_SHORT).show();

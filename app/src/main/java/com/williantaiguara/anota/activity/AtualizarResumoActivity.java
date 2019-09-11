@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.williantaiguara.anota.R;
+import com.williantaiguara.anota.helper.Base64Custom;
 import com.williantaiguara.anota.model.DateCustom;
 import com.williantaiguara.anota.model.Disciplina;
 import com.williantaiguara.anota.model.Lembrete;
@@ -21,6 +22,7 @@ public class AtualizarResumoActivity extends AppCompatActivity {
     private TextInputEditText tituloResumo, conteudoResumo;
     private String keyResumo;
     private Lembrete resumo;
+    private Disciplina disciplina;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class AtualizarResumoActivity extends AppCompatActivity {
         //recupera os dados da disciplina
         Bundle dados = getIntent().getExtras();
         resumoRecuperado = (Lembrete) dados.getSerializable("resumo");
+        disciplina = (Disciplina) dados.getSerializable("disciplina");
         tituloResumo.setText(resumoRecuperado.getTitulo());
         conteudoResumo.setText(resumoRecuperado.getConteudo());
         keyResumo = resumoRecuperado.getKey();
@@ -75,7 +78,9 @@ public class AtualizarResumoActivity extends AppCompatActivity {
         resumo.setKey(keyResumo);
         Log.i("data", resumo.getData());
 
-        resumo.atualizarResumo();
+        resumo.atualizarResumo(Base64Custom.CodificarBase64(disciplina.getNomeCurso()),
+                                Base64Custom.CodificarBase64(disciplina.getSemestreCurso()),
+                                Base64Custom.CodificarBase64(disciplina.getNomeDisciplina()));
 
         finish();
         Toast.makeText(this, "Resumo adicionado com Sucesso!", Toast.LENGTH_SHORT).show();

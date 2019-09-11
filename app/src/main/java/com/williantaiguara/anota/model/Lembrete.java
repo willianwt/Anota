@@ -41,23 +41,31 @@ public class Lembrete implements Serializable {
                 .setValue(this);
     }
 
-    public void salvarResumo(){
+    public void salvarResumo(String curso, String semestre, String disciplina){
         FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         DatabaseReference firebase = ConfiguracaoFirebase.getFirebaseDatabase();
         String idUsuario = Base64Custom.CodificarBase64(autenticacao.getCurrentUser().getEmail());
         firebase.child("usuarios")
                 .child(idUsuario)
+                .child("cursos")
+                .child(curso)
+                .child(semestre)
+                .child(disciplina)
                 .child("resumos")
                 .push()
                 .setValue(this);
     }
 
-    public void  atualizarResumo(){
+    public void  atualizarResumo(String curso, String semestre, String disciplina){
         FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         DatabaseReference firebase = ConfiguracaoFirebase.getFirebaseDatabase();
         String idUsuario = Base64Custom.CodificarBase64(autenticacao.getCurrentUser().getEmail());
         firebase.child("usuarios")
                 .child(idUsuario)
+                .child("cursos")
+                .child(curso)
+                .child(semestre)
+                .child(disciplina)
                 .child("resumos")
                 .child(key)
                 .setValue(this);
