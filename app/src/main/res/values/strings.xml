@@ -36,4 +36,5 @@
     <string name="semestre_do_curso_x">Semestre do Curso X</string>
     <string name="title_activity_disciplinas">DisciplinasActivity</string>
     <string name="title_activity_disciplina_selecionada">DisciplinaSelecionadaActivity</string>
+    <string name="title_activity_faltas_por_disciplina">FaltasPorDisciplinaActivity</string>
 </resources>

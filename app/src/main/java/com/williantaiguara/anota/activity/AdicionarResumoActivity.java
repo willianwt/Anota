@@ -3,9 +3,6 @@ package com.williantaiguara.anota.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -14,24 +11,11 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.williantaiguara.anota.R;
-import com.williantaiguara.anota.adapter.AdapterLembretes;
-import com.williantaiguara.anota.adapter.AdapterListaResumos;
-import com.williantaiguara.anota.config.ConfiguracaoFirebase;
 import com.williantaiguara.anota.helper.Base64Custom;
-import com.williantaiguara.anota.helper.ProgressBarCustom;
-import com.williantaiguara.anota.model.DateCustom;
+import com.williantaiguara.anota.helper.DateCustom;
 import com.williantaiguara.anota.model.Disciplina;
 import com.williantaiguara.anota.model.Lembrete;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AdicionarResumoActivity extends AppCompatActivity {
 

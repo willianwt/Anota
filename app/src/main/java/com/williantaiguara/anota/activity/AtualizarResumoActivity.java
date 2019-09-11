@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.williantaiguara.anota.R;
 import com.williantaiguara.anota.helper.Base64Custom;
-import com.williantaiguara.anota.model.DateCustom;
 import com.williantaiguara.anota.model.Disciplina;
 import com.williantaiguara.anota.model.Lembrete;
 

@@ -37,6 +37,7 @@
             android:layout_marginBottom="1dp"
             android:layout_weight="1"
             android:background="@drawable/button_blue"
+            android:onClick="abrirFaltas"
             android:text="Faltas: 0"
             android:textColor="@android:color/white" />
 

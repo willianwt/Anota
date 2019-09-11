@@ -124,6 +124,18 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void adicionarFalta(View view){
+        Intent intent = new Intent(this, AdicionarFaltasActivity.class);
+        intent.putExtra("disciplina", disciplina);
+        startActivity(intent);
+    }
+
+    public void abrirFaltas(View view){
+        Intent intent = new Intent(this, FaltasPorDisciplinaActivity.class);
+        intent.putExtra("disciplina", disciplina);
+        startActivity(intent);
+    }
+
     public void recuperarResumos(){
         String emailUsuario = autenticacao.getCurrentUser().getEmail();
         String idUsuario = Base64Custom.CodificarBase64(emailUsuario);

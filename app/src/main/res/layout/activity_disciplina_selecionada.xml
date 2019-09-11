@@ -39,58 +39,59 @@
         fab:menu_colorRipple="#99FFFFFF"
         fab:menu_fab_label="Cancelar"
         fab:menu_fab_size="normal"
-        fab:menu_icon="@drawable/fab_add"
-        >
+        fab:menu_icon="@drawable/fab_add">
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/menu_adc_resumo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="adicionarResumo"
             android:src="@drawable/ic_add"
-            fab:fab_label="Resumo"
-            fab:fab_size="mini"
             app:fab_colorNormal="@color/colorPrimary"
             app:fab_colorPressed="@color/colorPrimaryDark"
-            android:onClick="adicionarResumo"/>
+            fab:fab_label="Resumo"
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/menu_adc_nota"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_add"
-            fab:fab_label="Nota"
-            fab:fab_size="mini"
             app:fab_colorNormal="@color/colorPrimary"
-            app:fab_colorPressed="@color/colorPrimaryDark"/>
+            app:fab_colorPressed="@color/colorPrimaryDark"
+            fab:fab_label="Nota"
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/menu_adc_falta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="adicionarFalta"
             android:src="@drawable/ic_add"
-            fab:fab_label="Falta"
-            fab:fab_size="mini"
             app:fab_colorNormal="@color/colorPrimary"
-            app:fab_colorPressed="@color/colorPrimaryDark"/>
+            app:fab_colorPressed="@color/colorPrimaryDark"
+            fab:fab_label="Falta"
+            fab:fab_size="mini" />
+
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/menu_adc_foto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_add"
-            fab:fab_label="Foto"
-            fab:fab_size="mini"
             app:fab_colorNormal="@color/colorPrimary"
-            app:fab_colorPressed="@color/colorPrimaryDark"/>
+            app:fab_colorPressed="@color/colorPrimaryDark"
+            fab:fab_label="Foto"
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/menu_adc_gravacao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_add"
-            fab:fab_label="Áudio"
-            fab:fab_size="mini"
             app:fab_colorNormal="@color/colorPrimary"
-            app:fab_colorPressed="@color/colorPrimaryDark"/>
+            app:fab_colorPressed="@color/colorPrimaryDark"
+            fab:fab_label="Áudio"
+            fab:fab_size="mini" />
 
     </com.github.clans.fab.FloatingActionMenu>
 

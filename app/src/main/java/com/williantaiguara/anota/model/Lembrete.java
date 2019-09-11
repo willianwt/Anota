@@ -8,6 +8,12 @@ import com.williantaiguara.anota.helper.Base64Custom;
 
 import java.io.Serializable;
 
+/*
+    Lembretes e resumos possuem os mesmos dados, logo a mesma classe foi utilizada para ambos, com a diferença apenas no
+    método de salvar e atualizar.
+
+ */
+
 public class Lembrete implements Serializable {
 
     private String titulo;
