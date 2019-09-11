@@ -11,7 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.AdicionarFaltasActivity"></activity>
+        <activity
+            android:name=".activity.AdicionarFaltasActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.FaltasPorDisciplinaActivity"
             android:label="@string/title_activity_faltas_por_disciplina"
