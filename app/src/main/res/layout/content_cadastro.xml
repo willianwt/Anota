@@ -95,5 +95,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <TextView
+        android:id="@+id/txTermosDeUso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="abreTermosDeUso"
+        android:text="Ao se cadastrar voce concorda com os TERMOS DE USO!"
+        android:textAlignment="center" />
+
 
 </LinearLayout>

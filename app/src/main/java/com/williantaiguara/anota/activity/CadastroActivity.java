@@ -1,6 +1,7 @@
 package com.williantaiguara.anota.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -139,7 +140,10 @@ public class CadastroActivity extends AppCompatActivity {
 
 
     }
-
+    public void abreTermosDeUso(View view){
+        Intent intent = new Intent(CadastroActivity.this, TermosDeUsoActivity.class);
+        startActivity(intent);
+    }
 
 
     @Override

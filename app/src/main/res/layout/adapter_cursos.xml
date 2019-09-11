@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/txDataFalta"
+            android:id="@+id/txNomeDoCurso"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/button_blue"

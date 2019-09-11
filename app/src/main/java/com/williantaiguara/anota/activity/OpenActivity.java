@@ -93,5 +93,10 @@ public class OpenActivity extends IntroActivity {
         startActivity(intent);
     }
 
+    public void abreTermosDeUso(View view){
+        Intent intent = new Intent(OpenActivity.this, TermosDeUsoActivity.class);
+        startActivity(intent);
+    }
+
 
 }
