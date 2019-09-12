@@ -11,7 +11,6 @@ import java.io.Serializable;
 public class Disciplina implements Serializable {
 /*
     todo: pensar num nome melhor que envolva curso e disciplina.
-    todo: o nome do curso não deve iniciar com número. criar um método para prevenir isso.
  */
 
 

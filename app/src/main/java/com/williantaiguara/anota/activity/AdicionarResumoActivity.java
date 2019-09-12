@@ -38,12 +38,7 @@ public class AdicionarResumoActivity extends AppCompatActivity {
         //recupera os dados da disciplina
         Bundle dados = getIntent().getExtras();
         disciplina = (Disciplina) dados.getSerializable("disciplina");
-        Log.i("dadossemestre", disciplina.getSemestreCurso());
-        Log.i("dadosnomecurso", disciplina.getNomeCurso());
-        Log.i("dadosprof", disciplina.getNomeProfessorDisciplina());
-        Log.i("dadosnomedisc", disciplina.getNomeDisciplina());
-        Log.i("dadosemailprof", disciplina.getEmailProfessorDisciplina());
-        Log.i("dadoskey", disciplina.getKey());
+
 
         //inicializa os campos de texto
         tituloResumo = findViewById(R.id.etTituloResumo);
