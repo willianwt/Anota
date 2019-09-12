@@ -1,7 +1,6 @@
 package com.williantaiguara.anota.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.williantaiguara.anota.R;
+import com.williantaiguara.anota.helper.DateCustom;
 import com.williantaiguara.anota.model.Lembrete;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class AdapterLembretes extends RecyclerView.Adapter<AdapterLembretes.MyViewHolder> {
@@ -38,15 +36,8 @@ public class AdapterLembretes extends RecyclerView.Adapter<AdapterLembretes.MyVi
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Lembrete lembrete = lembreteList.get(position);
 
-
         holder.titulo.setText(lembrete.getTitulo());
-        List<String> dataSeparada = null;
-
-        dataSeparada = Arrays.asList(lembrete.getData().split("-"));
-        Collections.reverse(dataSeparada);
-        String dataFormatada = TextUtils.join("/", dataSeparada);
-        holder.data.setText(dataFormatada);
-
+        holder.data.setText(DateCustom.formataData(lembrete.getData()));
 
         if (lembrete.getConteudo() != null && lembrete.getConteudo().length() > 50) {
             String resumo = lembrete.getConteudo();

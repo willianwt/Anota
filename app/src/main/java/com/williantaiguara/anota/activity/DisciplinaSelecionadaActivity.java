@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +36,7 @@ import com.williantaiguara.anota.helper.Base64Custom;
 import com.williantaiguara.anota.helper.ProgressBarCustom;
 import com.williantaiguara.anota.helper.RecyclerItemClickListener;
 import com.williantaiguara.anota.model.Disciplina;
+import com.williantaiguara.anota.model.Falta;
 import com.williantaiguara.anota.model.Lembrete;
 
 import java.security.PrivateKey;
@@ -52,6 +54,9 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
     private AdapterListaResumos adapterListaResumos;
     private RecyclerView recyclerViewListaResumos;
     private List<Lembrete> resumos = new ArrayList<>();
+    private String emailUsuario = autenticacao.getCurrentUser().getEmail();
+    private String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
+    private Button btTotalFaltas, btTotalNotas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,9 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
         Log.i("dadosnomedisc", disciplina.getNomeDisciplina());
         Log.i("dadosemailprof", disciplina.getEmailProfessorDisciplina());
         Log.i("dadoskey", disciplina.getKey());
+
+        btTotalFaltas = findViewById(R.id.btListaFaltas);
+        btTotalNotas = findViewById(R.id.btListaNota);
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -136,9 +144,35 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void contarQtdFaltas(){
+        Query query = firebaseRef.child("usuarios")
+                .child(idUsuario)
+                .child("cursos")
+                .child(Base64Custom.CodificarBase64(disciplina.getNomeCurso()))
+                .child(Base64Custom.CodificarBase64(disciplina.getSemestreCurso()))
+                .child(Base64Custom.CodificarBase64(disciplina.getNomeDisciplina()))
+                .child("faltas").orderByChild("data");
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int total = 0;
+                for (DataSnapshot qtd: dataSnapshot.getChildren()){
+                    Falta qtdFalta = qtd.getValue(Falta.class);
+                    total += Integer.valueOf(qtdFalta.getQtd());
+                    btTotalFaltas.setText("Faltas: " + total);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public void recuperarResumos(){
-        String emailUsuario = autenticacao.getCurrentUser().getEmail();
-        String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
 
         Query query = firebaseRef.child("usuarios")
                                 .child(idUsuario)
@@ -177,7 +211,7 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
         alertDialog.setTitle("Excluir Resumo:");
-        alertDialog.setMessage("Tem certeza que deseja excluir esse lembrete?");
+        alertDialog.setMessage("Tem certeza que deseja excluir esse resumo?");
         alertDialog.setCancelable(false);
         alertDialog.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
             @Override
@@ -242,5 +276,12 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         recuperarResumos();
+        contarQtdFaltas();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        firebaseRef.removeEventListener(valueEventListenerResumos);
     }
 }

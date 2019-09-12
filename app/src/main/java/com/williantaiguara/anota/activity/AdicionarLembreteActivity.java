@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.williantaiguara.anota.R;
+import com.williantaiguara.anota.helper.DateCustom;
 import com.williantaiguara.anota.model.Lembrete;
 
 import java.text.SimpleDateFormat;
@@ -113,11 +114,7 @@ public class AdicionarLembreteActivity extends AppCompatActivity {
     }
 
     private void updateLabel() {
-
-        String myFormat = "yyyy-MM-dd"; //formato da data
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, new Locale("pt","BR"));
-
-        dataLembrete.setText(sdf.format(myCalendar.getTime()));
+        dataLembrete.setText(DateCustom.dataSelecionada(myCalendar.getTime()));
     }
 
     private void SalvarLembrete(){

@@ -11,7 +11,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.TermosDeUsoActivity"></activity>
+        <activity
+            android:name=".activity.AtualizarFaltaActivity"
+            android:label="@string/title_activity_atualizar_falta"
+            android:parentActivityName=".activity.FaltasPorDisciplinaActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.williantaiguara.anota.activity.FaltasPorDisciplinaActivity" />
+        </activity>
+        <activity android:name=".activity.TermosDeUsoActivity" />
         <activity
             android:name=".activity.AdicionarFaltasActivity"
             android:theme="@style/AppTheme.NoActionBar"

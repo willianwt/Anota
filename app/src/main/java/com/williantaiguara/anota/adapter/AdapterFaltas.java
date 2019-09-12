@@ -1,6 +1,7 @@
 package com.williantaiguara.anota.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.williantaiguara.anota.R;
+import com.williantaiguara.anota.helper.DateCustom;
 import com.williantaiguara.anota.model.Falta;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class AdapterFaltas extends RecyclerView.Adapter<AdapterFaltas.MyViewHolder> {
@@ -37,7 +41,8 @@ public class AdapterFaltas extends RecyclerView.Adapter<AdapterFaltas.MyViewHold
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Falta falta = faltaList.get(position);
         holder.qtdFalta.setText(falta.getQtd());
-        holder.dataFalta.setText(falta.getData());
+
+        holder.dataFalta.setText(DateCustom.formataData(falta.getData()));
     }
 
     @Override

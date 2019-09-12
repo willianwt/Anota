@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.williantaiguara.anota.R;
+import com.williantaiguara.anota.helper.DateCustom;
 import com.williantaiguara.anota.model.Lembrete;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class AdapterListaResumos extends RecyclerView.Adapter<AdapterListaResumo
 
 
         holder.titulo.setText(resumo.getTitulo());
-        holder.data.setText(resumo.getData());
+        holder.data.setText(DateCustom.formataData(resumo.getData()));
 
         if (resumo.getConteudo() != null && resumo.getConteudo().length() > 50) {
             String tamanhoResumo = resumo.getConteudo();

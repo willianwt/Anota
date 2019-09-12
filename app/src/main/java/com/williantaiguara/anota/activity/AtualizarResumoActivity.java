@@ -82,7 +82,7 @@ public class AtualizarResumoActivity extends AppCompatActivity {
                                 Base64Custom.CodificarBase64(disciplina.getNomeDisciplina()));
 
         finish();
-        Toast.makeText(this, "Resumo adicionado com Sucesso!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Resumo atualizado com Sucesso!", Toast.LENGTH_SHORT).show();
     }
     public void VerificarCampos(){
         if (!tituloResumo.getText().toString().isEmpty()){

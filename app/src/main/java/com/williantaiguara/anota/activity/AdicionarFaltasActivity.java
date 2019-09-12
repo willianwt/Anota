@@ -4,19 +4,24 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.williantaiguara.anota.R;
 import com.williantaiguara.anota.helper.Base64Custom;
+import com.williantaiguara.anota.helper.DateCustom;
 import com.williantaiguara.anota.model.Disciplina;
 import com.williantaiguara.anota.model.Falta;
+
+import java.util.Calendar;
 
 public class AdicionarFaltasActivity extends AppCompatActivity {
 
@@ -24,6 +29,7 @@ public class AdicionarFaltasActivity extends AppCompatActivity {
     private Falta falta;
     private Disciplina disciplina;
     private Button salvarFalta;
+    private Calendar myCalendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,15 @@ public class AdicionarFaltasActivity extends AppCompatActivity {
         dataFalta = findViewById(R.id.txDiaFalta);
         qtdFaltas = findViewById(R.id.txQtdFaltas);
         salvarFalta = findViewById(R.id.btSalvarFalta);
+
+        dataFalta.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (dataFalta.hasFocus()) {
+                    AbreCalendario();
+                }
+            }
+        });
 
         salvarFalta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +89,30 @@ public class AdicionarFaltasActivity extends AppCompatActivity {
                     "Informe uma quantidade!",
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+            qtdFaltas.requestFocus();
+        }
+
+    };
+    private void AbreCalendario(){
+        new DatePickerDialog(AdicionarFaltasActivity.this, date,
+                myCalendar.get(Calendar.YEAR),
+                myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH))
+                .show();
+    }
+
+    private void updateLabel() {
+        dataFalta.setText(DateCustom.dataSelecionada(myCalendar.getTime()));
     }
 
     @Override
