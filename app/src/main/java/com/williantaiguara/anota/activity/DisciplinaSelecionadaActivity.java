@@ -138,6 +138,16 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void adicionarNota(View view){
+        Intent intent = new Intent(this, AdicionarNotaActivity.class);
+        intent.putExtra("disciplina", disciplina);
+        startActivity(intent);
+    }
+
+    public void abrirNotas(){
+
+    }
+
     public void abrirFaltas(View view){
         Intent intent = new Intent(this, FaltasPorDisciplinaActivity.class);
         intent.putExtra("disciplina", disciplina);

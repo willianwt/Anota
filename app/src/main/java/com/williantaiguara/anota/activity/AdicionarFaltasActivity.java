@@ -14,7 +14,6 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.williantaiguara.anota.R;
 import com.williantaiguara.anota.helper.Base64Custom;
 import com.williantaiguara.anota.helper.DateCustom;
@@ -50,7 +49,7 @@ public class AdicionarFaltasActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (dataFalta.hasFocus()) {
-                    AbreCalendario();
+                    abreCalendario();
                 }
             }
         });
@@ -58,12 +57,12 @@ public class AdicionarFaltasActivity extends AppCompatActivity {
         salvarFalta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                VerificarCampos();
+                verificarCampos();
             }
         });
     }
 
-    public void AdicionarFaltas(){
+    public void adicionarFaltas(){
         falta = new Falta();
         falta.setData(dataFalta.getText().toString());
         falta.setQtd(qtdFaltas.getText().toString());
@@ -75,10 +74,10 @@ public class AdicionarFaltasActivity extends AppCompatActivity {
         Toast.makeText(this, "Falta adicionada com Sucesso!", Toast.LENGTH_SHORT).show();
     }
 
-    public void VerificarCampos(){
+    public void verificarCampos(){
         if (!dataFalta.getText().toString().isEmpty()){
             if (!qtdFaltas.getText().toString().isEmpty()){
-                AdicionarFaltas();
+                adicionarFaltas();
             }else{
                 Toast.makeText(AdicionarFaltasActivity.this,
                         "O campo data não pode estar vazio!",
@@ -103,7 +102,7 @@ public class AdicionarFaltasActivity extends AppCompatActivity {
         }
 
     };
-    private void AbreCalendario(){
+    private void abreCalendario(){
         new DatePickerDialog(AdicionarFaltasActivity.this, date,
                 myCalendar.get(Calendar.YEAR),
                 myCalendar.get(Calendar.MONTH),
@@ -128,7 +127,7 @@ public class AdicionarFaltasActivity extends AppCompatActivity {
         if (id == R.id.salvar){
             try{
                 item.setEnabled(false);
-                VerificarCampos();
+                verificarCampos();
                 item.setEnabled(true);
 
             }catch (Exception e){ //TODO: TRATAR ERROS

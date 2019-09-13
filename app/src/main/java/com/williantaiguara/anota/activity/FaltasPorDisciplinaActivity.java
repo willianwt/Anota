@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,7 +31,6 @@ import com.williantaiguara.anota.helper.Base64Custom;
 import com.williantaiguara.anota.helper.RecyclerItemClickListener;
 import com.williantaiguara.anota.model.Disciplina;
 import com.williantaiguara.anota.model.Falta;
-import com.williantaiguara.anota.model.Lembrete;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,12 +102,13 @@ public class FaltasPorDisciplinaActivity extends AppCompatActivity {
                         }
                 )
         );
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fabFaltas);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(FaltasPorDisciplinaActivity.this, AdicionarFaltasActivity.class);
+                intent.putExtra("disciplina", disciplina);
+                startActivity(intent);
             }
         });
 

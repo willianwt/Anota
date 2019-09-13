@@ -18,6 +18,7 @@
             android:id="@+id/btListaNota"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="abrirNotas"
             android:layout_marginStart="1dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="1dp"

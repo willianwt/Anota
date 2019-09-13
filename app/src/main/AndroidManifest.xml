@@ -12,6 +12,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".activity.AdicionarNotaActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".activity.AtualizarFaltaActivity"
             android:label="@string/title_activity_atualizar_falta"
             android:parentActivityName=".activity.FaltasPorDisciplinaActivity"
