@@ -108,8 +108,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, MeusCursosActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_tools) {
-
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_logout) {
