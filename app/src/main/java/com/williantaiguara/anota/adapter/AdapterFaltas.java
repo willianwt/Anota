@@ -1,7 +1,6 @@
 package com.williantaiguara.anota.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,6 @@ import com.williantaiguara.anota.R;
 import com.williantaiguara.anota.helper.DateCustom;
 import com.williantaiguara.anota.model.Falta;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class AdapterFaltas extends RecyclerView.Adapter<AdapterFaltas.MyViewHolder> {

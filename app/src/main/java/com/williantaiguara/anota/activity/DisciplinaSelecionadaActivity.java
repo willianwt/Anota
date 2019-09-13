@@ -38,8 +38,10 @@ import com.williantaiguara.anota.helper.RecyclerItemClickListener;
 import com.williantaiguara.anota.model.Disciplina;
 import com.williantaiguara.anota.model.Falta;
 import com.williantaiguara.anota.model.Lembrete;
+import com.williantaiguara.anota.model.Nota;
 
 import java.security.PrivateKey;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -144,8 +146,10 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void abrirNotas(){
-
+    public void abrirNotas(View view){
+        Intent intent = new Intent(this, NotasPorDisciplinaActivity.class);
+        intent.putExtra("disciplina", disciplina);
+        startActivity(intent);
     }
 
     public void abrirFaltas(View view){
@@ -172,6 +176,33 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
                     total += Integer.valueOf(qtdFalta.getQtd());
                     btTotalFaltas.setText("Faltas: " + total);
                 }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public void contarNotas(){
+        Query query = firebaseRef.child("usuarios")
+                .child(idUsuario)
+                .child("cursos")
+                .child(Base64Custom.CodificarBase64(disciplina.getNomeCurso()))
+                .child(Base64Custom.CodificarBase64(disciplina.getSemestreCurso()))
+                .child(Base64Custom.CodificarBase64(disciplina.getNomeDisciplina()))
+                .child("notas").orderByChild("data");
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                double total = 0;
+                for (DataSnapshot qtd: dataSnapshot.getChildren()){
+                    Nota totalNota = qtd.getValue(Nota.class);
+                    total += totalNota.getNota();
+                }
+                btTotalNotas.setText("Nota: " + Math.round(total* 100.0 ) / 100.0);
 
             }
 
@@ -287,6 +318,7 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
         super.onStart();
         recuperarResumos();
         contarQtdFaltas();
+        contarNotas();
     }
 
     @Override

@@ -6,7 +6,9 @@ import com.google.firebase.database.Exclude;
 import com.williantaiguara.anota.config.ConfiguracaoFirebase;
 import com.williantaiguara.anota.helper.Base64Custom;
 
-public class Nota {
+import java.io.Serializable;
+
+public class Nota implements Serializable {
 
     private String titulo;
     private String data;
