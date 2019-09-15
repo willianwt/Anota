@@ -46,6 +46,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.0.0'
     implementation 'com.google.firebase:firebase-firestore:21.0.0'
     implementation 'com.google.firebase:firebase-storage:19.0.0'
+    implementation 'com.firebaseui:firebase-ui-storage:3.3.0'
+
 
     //floating action button
     implementation 'com.github.clans:fab:1.6.4'
@@ -53,6 +55,17 @@ dependencies {
 
     //material intro
     implementation 'com.heinrichreimersoftware:material-intro:master-SNAPSHOT'
+
+    //glide - para imagens
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    annotationProcessor 'androidx.annotation:annotation:1.1.0'
+    compile ("com.github.bumptech.glide:recyclerview-integration:4.9.0") {
+        // Excludes the support library because it's already included by Glide.
+        transitive = false
+    }
+    //picasso - para imagens
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
 
 }

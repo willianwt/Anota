@@ -20,6 +20,8 @@ public class Lembrete implements Serializable {
     private String conteudo;
     private String data;
     private String key;
+    private String imagem;
+    private String tipo;
     private transient FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private transient DatabaseReference firebase = ConfiguracaoFirebase.getFirebaseDatabase();
     private transient String idUsuario = Base64Custom.CodificarBase64(autenticacao.getCurrentUser().getEmail());
@@ -103,5 +105,19 @@ public class Lembrete implements Serializable {
         this.data = data;
     }
 
+    public String getImagem() {
+        return imagem;
+    }
 
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 }

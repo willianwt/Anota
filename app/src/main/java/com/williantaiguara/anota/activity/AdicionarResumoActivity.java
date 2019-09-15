@@ -77,6 +77,7 @@ public class AdicionarResumoActivity extends AppCompatActivity {
         resumo.setTitulo(tituloResumo.getText().toString());
         resumo.setConteudo(conteudoResumo.getText().toString());
         resumo.setData(DateCustom.dataAtual());
+        resumo.setTipo("texto");
         Log.i("data", resumo.getData());
 
         resumo.salvarResumo(Base64Custom.CodificarBase64(disciplina.getNomeCurso()),

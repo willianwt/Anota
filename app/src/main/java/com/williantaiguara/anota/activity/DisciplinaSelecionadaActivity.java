@@ -1,26 +1,31 @@
 package com.williantaiguara.anota.activity;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,24 +33,33 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 import com.williantaiguara.anota.R;
-import com.williantaiguara.anota.adapter.AdapterLembretes;
 import com.williantaiguara.anota.adapter.AdapterListaResumos;
 import com.williantaiguara.anota.config.ConfiguracaoFirebase;
 import com.williantaiguara.anota.helper.Base64Custom;
-import com.williantaiguara.anota.helper.ProgressBarCustom;
+import com.williantaiguara.anota.helper.Permissao;
 import com.williantaiguara.anota.helper.RecyclerItemClickListener;
 import com.williantaiguara.anota.model.Disciplina;
 import com.williantaiguara.anota.model.Falta;
 import com.williantaiguara.anota.model.Lembrete;
 import com.williantaiguara.anota.model.Nota;
 
-import java.security.PrivateKey;
-import java.text.DecimalFormat;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DisciplinaSelecionadaActivity extends AppCompatActivity {
+
+    private String[] permissoesNecessarias = new String[]{
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     private Disciplina disciplina;
     private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
@@ -59,6 +73,9 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
     private String emailUsuario = autenticacao.getCurrentUser().getEmail();
     private String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
     private Button btTotalFaltas, btTotalNotas;
+    private static final int SELECAO_CAMERA = 100;
+    private StorageReference storageReference = ConfiguracaoFirebase.getFirebaseStorage();
+    private String currentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +84,9 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
         //recupera os dados da disciplina
         Bundle dados = getIntent().getExtras();
         disciplina = (Disciplina) dados.getSerializable("disciplina");
-        Log.i("dadossemestre", disciplina.getSemestreCurso());
-        Log.i("dadosnomecurso", disciplina.getNomeCurso());
-        Log.i("dadosprof", disciplina.getNomeProfessorDisciplina());
-        Log.i("dadosnomedisc", disciplina.getNomeDisciplina());
-        Log.i("dadosemailprof", disciplina.getEmailProfessorDisciplina());
-        Log.i("dadoskey", disciplina.getKey());
+
+
+        Permissao.validarPermissoes(permissoesNecessarias, this, 1);
 
         btTotalFaltas = findViewById(R.id.btListaFaltas);
         btTotalNotas = findViewById(R.id.btListaNota);
@@ -87,7 +101,7 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
         //ProgressBarCustom.openProgressBar(progressBar);
 
         //configurar adapter
-        adapterListaResumos = new AdapterListaResumos(resumos, this);
+        adapterListaResumos = new AdapterListaResumos(resumos, getApplicationContext());
         //configurar recyclerview
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewListaResumos.setLayoutManager(layoutManager);
@@ -128,6 +142,71 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        for ( int permissaoResultado : grantResults ){
+            if ( permissaoResultado == PackageManager.PERMISSION_DENIED ){
+                alertaValidacaoPermissao();
+            }
+        }
+
+    }
+
+    private void alertaValidacaoPermissao(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder( this );
+        builder.setTitle("Permissões Negadas");
+        builder.setMessage("Para utilizar o app é necessário aceitar as permissões");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Permissao.validarPermissoes(permissoesNecessarias, DisciplinaSelecionadaActivity.this, 1);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bitmap bitmap = null;
+        if ( resultCode == RESULT_OK ){
+            try {
+                switch ( requestCode ) {
+                    case SELECAO_CAMERA:
+                        File file = new File(currentPhotoPath);
+                        bitmap = MediaStore.Images.Media
+                                .getBitmap(getContentResolver(), Uri.fromFile(file));
+                        break;
+                }
+
+                if (bitmap != null){
+                    String filename = "bitmap.jpeg";
+                    FileOutputStream stream = this.openFileOutput(filename, Context.MODE_PRIVATE);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
+
+                    stream.close();
+                    bitmap.recycle();
+
+
+                    Intent intent = new Intent(DisciplinaSelecionadaActivity.this, AdicionarResumoComFotoActivity.class);
+                    intent.putExtra("disciplina", disciplina);
+                    intent.putExtra("imagem", filename);
+                    startActivity(intent);
+
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void adicionarResumo(View view){
         Intent intent = new Intent(this, AdicionarResumoActivity.class);
         intent.putExtra("disciplina", disciplina);
@@ -156,6 +235,44 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FaltasPorDisciplinaActivity.class);
         intent.putExtra("disciplina", disciplina);
         startActivity(intent);
+    }
+
+    public void capturarImagem(View view) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                ex.printStackTrace();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.williantaiguara.anota.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, SELECAO_CAMERA);
+            }
+        }
+    }
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "image";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 
     public void contarQtdFaltas(){
@@ -325,5 +442,11 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         firebaseRef.removeEventListener(valueEventListenerResumos);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        this.recreate();
     }
 }
