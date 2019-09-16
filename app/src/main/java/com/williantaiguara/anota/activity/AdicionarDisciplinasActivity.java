@@ -63,7 +63,7 @@ public class AdicionarDisciplinasActivity extends AppCompatActivity {
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                     verificarCampos();
                 } catch (Exception e) {
-
+                    e.printStackTrace();
                 }
             }
         });

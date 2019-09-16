@@ -10,7 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -170,6 +171,37 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_com_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.home){
+            try{
+                item.setEnabled(false);
+                try {
+                    Intent intent = new Intent(DisciplinaSelecionadaActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                item.setEnabled(true);
+
+            }catch (Exception e){
+                e.printStackTrace();
+                item.setEnabled(true);
+
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

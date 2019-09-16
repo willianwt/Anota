@@ -35,6 +35,7 @@ public class AdicionarCursoActivity extends AppCompatActivity {
     private AutoCompleteTextView tvAdicionarCurso;
     private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
     private EditText semestre;
+    private String curso;
 
 
     @Override
@@ -49,6 +50,12 @@ public class AdicionarCursoActivity extends AppCompatActivity {
         semestre = findViewById(R.id.etSemestre);
         tvAdicionarCurso = findViewById(R.id.autoCompleteTVAdicionarCurso);
         final ArrayAdapter<String> autoComplete = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+
+        Bundle dados = getIntent().getExtras();
+        if (dados != null){
+            curso = dados.getString("nomeCurso");
+            tvAdicionarCurso.setText(curso);
+        }
 
         firebaseRef.child("cursos").orderByValue().addValueEventListener(new ValueEventListener() {
             @Override

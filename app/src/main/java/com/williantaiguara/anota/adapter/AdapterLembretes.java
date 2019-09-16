@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,6 +47,8 @@ public class AdapterLembretes extends RecyclerView.Adapter<AdapterLembretes.MyVi
         } else {
             holder.resumo.setText(lembrete.getConteudo());
         }
+        holder.imagem.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -56,6 +59,8 @@ public class AdapterLembretes extends RecyclerView.Adapter<AdapterLembretes.MyVi
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView titulo, resumo, data;
+        ImageView imagem;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -63,6 +68,8 @@ public class AdapterLembretes extends RecyclerView.Adapter<AdapterLembretes.MyVi
             titulo = itemView.findViewById(R.id.adapterTituloListaLembretes);
             data = itemView.findViewById(R.id.adapterDataListaLembretes);
             resumo = itemView.findViewById(R.id.adapterResumoListaLembretes);
+            imagem = itemView.findViewById(R.id.adapterImageResumo);
+
         }
     }
 

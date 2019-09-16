@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -46,6 +48,7 @@ public class MeusCursosActivity extends AppCompatActivity {
     private Disciplina curso;
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private List<Disciplina> cursos = new ArrayList<>();
+    private ValueEventListener valueEventListener;
 
 
 
@@ -102,18 +105,49 @@ public class MeusCursosActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MeusCursosActivity.this, AdicionarCursoActivity.class);
+                startActivity(intent);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_com_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.home){
+            try{
+                item.setEnabled(false);
+                try {
+                    Intent intent = new Intent(MeusCursosActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                item.setEnabled(true);
+
+            }catch (Exception e){
+                e.printStackTrace();
+                item.setEnabled(true);
+
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void recuperarCursos(){
         String emailUsuario = autenticacao.getCurrentUser().getEmail();
         String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
         Query query = firebaseRef.child("usuarios").child(idUsuario).child("cursos");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        valueEventListener = query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 cursos.clear();
@@ -139,7 +173,12 @@ public class MeusCursosActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         recuperarCursos();
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        firebaseRef.removeEventListener(valueEventListener);
     }
 
     public void swipe() {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/outline_home_white_18dp"
+        android:title="@string/proximo"
+        android:visible="true"
+        app:showAsAction="always|withText" />
+
+</menu>

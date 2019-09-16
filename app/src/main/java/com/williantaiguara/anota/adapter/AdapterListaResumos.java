@@ -13,14 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.util.FixedPreloadSizeProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 import com.williantaiguara.anota.R;
 import com.williantaiguara.anota.config.ConfiguracaoFirebase;
-import com.williantaiguara.anota.config.GlideApp;
 import com.williantaiguara.anota.helper.Base64Custom;
 import com.williantaiguara.anota.helper.DateCustom;
 import com.williantaiguara.anota.model.Lembrete;
@@ -50,38 +45,42 @@ public class AdapterListaResumos extends RecyclerView.Adapter<AdapterListaResumo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Lembrete resumo = resumoList.get(position);
-        holder.imagem.setImageURI(null);
-        holder.titulo.setText(resumo.getTitulo());
-        holder.data.setText(DateCustom.formataData(resumo.getData()));
-        String msg = resumo.getConteudo();
-        String imagem = null;
-        if (resumo.getImagem() != null) {
-            imagem = resumo.getImagem().trim();
-        }
+        try {
+            holder.imagem.setImageURI(null);
+            holder.titulo.setText(resumo.getTitulo());
+            holder.data.setText(DateCustom.formataData(resumo.getData()));
+            String msg = resumo.getConteudo();
+            String imagem = null;
+            if (resumo.getImagem() != null) {
+                imagem = resumo.getImagem().trim();
+            }
 
-        if (imagem != null){
+            if (imagem != null) {
 
-            Glide.with(context)
-                    .load(resumo.getImagem())
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .override(1000)
-                    .centerCrop()
-                    .into(holder.imagem);
+                Glide.with(context)
+                        .load(resumo.getImagem())
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .override(900)
+                        .centerCrop()
+                        .into(holder.imagem);
 
 //
-            holder.resumo.setVisibility(View.GONE);
+                holder.resumo.setVisibility(View.GONE);
 
-        }else{
-            if (resumo.getConteudo() != null && resumo.getConteudo().length() > 50) {
-                String tamanhoResumo = resumo.getConteudo();
-                tamanhoResumo = tamanhoResumo.substring(0, 50) + "...";
-                holder.resumo.setText(tamanhoResumo);
             } else {
-                holder.resumo.setText(resumo.getConteudo());
+                if (resumo.getConteudo() != null && resumo.getConteudo().length() > 50) {
+                    String tamanhoResumo = resumo.getConteudo();
+                    tamanhoResumo = tamanhoResumo.substring(0, 250) + "...";
+                    holder.resumo.setText(tamanhoResumo);
+                } else {
+                    holder.resumo.setText(resumo.getConteudo());
+                }
+                holder.imagem.setVisibility(View.GONE);
             }
-            holder.imagem.setVisibility(View.GONE);
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.i("erro", e.getMessage());
         }
-
     }
     @Override
     public long getItemId(int position) {

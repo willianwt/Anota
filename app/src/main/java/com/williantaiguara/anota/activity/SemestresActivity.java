@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -44,6 +46,7 @@ public class SemestresActivity extends AppCompatActivity {
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private Disciplina semestre;
     private List<Disciplina> semestres = new ArrayList<>();
+    private ValueEventListener valueEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,11 +110,43 @@ public class SemestresActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(SemestresActivity.this, AdicionarCursoActivity.class);
+                intent.putExtra("nomeCurso", cursoEscolhido);
+                startActivity(intent);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_com_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.salvar){
+            try{
+                item.setEnabled(false);
+                try {
+                    Intent intent = new Intent(SemestresActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                item.setEnabled(true);
+
+            }catch (Exception e){
+                e.printStackTrace();
+                item.setEnabled(true);
+
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void recuperarSemestres(){
@@ -120,7 +155,7 @@ public class SemestresActivity extends AppCompatActivity {
         Query query = firebaseRef.child("usuarios").child(idUsuario)
                                                     .child("cursos")
                                                     .child(Base64Custom.CodificarBase64(cursoEscolhido));
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        valueEventListener = query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 semestres.clear();
@@ -146,5 +181,11 @@ public class SemestresActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         recuperarSemestres();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        firebaseRef.removeEventListener(valueEventListener);
     }
 }
