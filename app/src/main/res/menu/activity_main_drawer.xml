@@ -22,9 +22,13 @@
     <item android:title="@string/configuracoes">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_perfil"
                 android:icon="@drawable/baseline_perm_identity_24"
                 android:title="@string/meu_perfil" />
+            <item
+                android:id="@+id/nav_sobre"
+                android:icon="@drawable/outline_contact_support_black_18dp"
+                android:title="Sobre" />
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_logout"

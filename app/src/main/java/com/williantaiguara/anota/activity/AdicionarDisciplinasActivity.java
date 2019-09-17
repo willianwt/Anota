@@ -106,10 +106,9 @@ public class AdicionarDisciplinasActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-               //TODO: salvarLembrete e retornar ao menu principal ou ir para a tela do curso
                 item.setEnabled(true);
 
-            }catch (Exception e){ //TODO: TRATAR ERROS
+            }catch (Exception e){ //
                 e.printStackTrace();
                 item.setEnabled(true);
 

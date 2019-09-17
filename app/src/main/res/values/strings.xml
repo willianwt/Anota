@@ -95,4 +95,9 @@
 \nCaso o Usuário não concorde com determinada cláusula deste Acordo, e obtenha judicialmente a nulidade da mesma, os demais dispositivos não serão prejudicados e permanecerão em vigor.</string>
     <string name="title_activity_atualizar_falta">AtualizarFaltaActivity</string>
     <string name="title_activity_notas_por_disciplina">NotasPorDisciplinaActivity</string>
+    <string name="texto_sobre">O Anota é um aplicativo desenvolvido por um grupo de universitários do curso de Análise e desenvolvimento de sistemas - 4º Semestre - UDF
+        \n O intuito do aplicativo é ajudar o estudante a organizar seus estudos, lembretes e resumos sem a necessidade de um caderno.
+        \n É possível cadastrar lembretes, cursos divididos em semestres e disciplinas, resumos e fotos para cada disciplina separadamente de maneira rápida e objetiva.
+        \n O projeto está em desenvolvimento e novas funcionalidades podem surgir com o tempo.
+        \n Abraços e bons estudos!</string>
 </resources>
