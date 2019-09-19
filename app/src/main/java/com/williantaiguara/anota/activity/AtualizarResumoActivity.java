@@ -57,7 +57,7 @@ public class AtualizarResumoActivity extends AppCompatActivity {
         if (id == R.id.salvar){
             try{
                 item.setEnabled(false);
-                VerificarCampos();
+                verificarCampos();
                 item.setEnabled(true);
 
             }catch (Exception e){ //TODO: TRATAR ERROS
@@ -69,7 +69,7 @@ public class AtualizarResumoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void AtualizarResumo(){
+    private void atualizarResumo(){
         resumo = new Lembrete();
         resumo.setTitulo(tituloResumo.getText().toString());
         resumo.setConteudo(conteudoResumo.getText().toString());
@@ -84,10 +84,10 @@ public class AtualizarResumoActivity extends AppCompatActivity {
         finish();
         Toast.makeText(this, "Resumo atualizado com Sucesso!", Toast.LENGTH_SHORT).show();
     }
-    public void VerificarCampos(){
+    public void verificarCampos(){
         if (!tituloResumo.getText().toString().isEmpty()){
             if (!conteudoResumo.getText().toString().isEmpty()){
-                AtualizarResumo();
+                atualizarResumo();
             }else{
                 Toast.makeText(AtualizarResumoActivity.this,
                         "O conteúdo não pode estar vazio!",

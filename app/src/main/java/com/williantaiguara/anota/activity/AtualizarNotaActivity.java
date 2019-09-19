@@ -18,7 +18,6 @@ import com.williantaiguara.anota.R;
 import com.williantaiguara.anota.helper.Base64Custom;
 import com.williantaiguara.anota.helper.DateCustom;
 import com.williantaiguara.anota.model.Disciplina;
-import com.williantaiguara.anota.model.Falta;
 import com.williantaiguara.anota.model.Nota;
 
 import java.util.Calendar;
@@ -57,14 +56,14 @@ public class AtualizarNotaActivity extends AppCompatActivity {
         btAtualizarNota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                VerificarCampos();
+                verificarCampos();
             }
         });
         txAtualizarDataNota.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (txAtualizarDataNota.hasFocus()) {
-                    AbreCalendario();
+                    abreCalendario();
                 }
             }
         });
@@ -83,7 +82,7 @@ public class AtualizarNotaActivity extends AppCompatActivity {
         if (id == R.id.salvar){
             try{
                 item.setEnabled(false);
-                VerificarCampos();
+                verificarCampos();
                 item.setEnabled(true);
 
             }catch (Exception e){ //TODO: TRATAR ERROS
@@ -106,7 +105,7 @@ public class AtualizarNotaActivity extends AppCompatActivity {
         }
 
     };
-    private void AbreCalendario(){
+    private void abreCalendario(){
         new DatePickerDialog(AtualizarNotaActivity.this, date,
                 myCalendar.get(Calendar.YEAR),
                 myCalendar.get(Calendar.MONTH),
@@ -118,7 +117,7 @@ public class AtualizarNotaActivity extends AppCompatActivity {
         txAtualizarDataNota.setText(DateCustom.dataSelecionada(myCalendar.getTime()));
     }
 
-    private void AtualizarFalta(){
+    private void atualizarNota(){
         nota = new Nota();
         nota.setTitulo(txAtualizarNomeNota.getText().toString());
         nota.setData(txAtualizarDataNota.getText().toString());
@@ -130,12 +129,12 @@ public class AtualizarNotaActivity extends AppCompatActivity {
                 Base64Custom.CodificarBase64(disciplina.getNomeDisciplina()));
 
         finish();
-        Toast.makeText(this, "Falta atualizada com Sucesso!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Nota atualizada com Sucesso!", Toast.LENGTH_SHORT).show();
     }
-    public void VerificarCampos(){
+    public void verificarCampos(){
         if (!txAtualizarNomeNota.getText().toString().isEmpty()){
             if (!txAtualizarValorNota.getText().toString().isEmpty()){
-                AtualizarFalta();
+                atualizarNota();
             }else{
                 Toast.makeText(AtualizarNotaActivity.this,
                         "A nota não pode estar vazio!",

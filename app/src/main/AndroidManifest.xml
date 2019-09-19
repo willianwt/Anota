@@ -20,7 +20,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.PerfilActivity"></activity>
+        <activity
+            android:name=".activity.FeedbackActivity"
+            android:label="@string/title_activity_feedback"
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.williantaiguara.anota.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activity.PerfilActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.SobreActivity"
             android:theme="@style/AppTheme.NoActionBar" />

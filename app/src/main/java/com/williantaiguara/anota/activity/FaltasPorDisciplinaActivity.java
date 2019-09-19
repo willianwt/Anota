@@ -152,7 +152,7 @@ public class FaltasPorDisciplinaActivity extends AppCompatActivity {
         });
     }
 
-    public void excluirResumo(final RecyclerView.ViewHolder viewHolder){
+    public void excluirFalta(final RecyclerView.ViewHolder viewHolder){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
         alertDialog.setTitle("Excluir Resumo:");
@@ -210,7 +210,7 @@ public class FaltasPorDisciplinaActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                excluirResumo(viewHolder);
+                excluirFalta(viewHolder);
             }
         };
 

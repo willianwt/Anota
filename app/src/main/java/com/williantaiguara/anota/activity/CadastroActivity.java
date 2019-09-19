@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.williantaiguara.anota.R;
 import com.williantaiguara.anota.config.ConfiguracaoFirebase;
 import com.williantaiguara.anota.helper.Base64Custom;
@@ -70,6 +71,9 @@ public class CadastroActivity extends AppCompatActivity {
                     try{
                         String identificadorUsuario = Base64Custom.CodificarBase64(usuario.getEmail());
                         usuario.setUid(identificadorUsuario);
+                        autenticacao.getCurrentUser().updateProfile(new UserProfileChangeRequest.Builder()
+                                .setDisplayName(campoNome.getText().toString())
+                                .build());
                         usuario.salvar();
                     }catch(Exception e){
                         e.printStackTrace();
@@ -105,40 +109,38 @@ public class CadastroActivity extends AppCompatActivity {
         String textoSenha = campoSenha.getText().toString();
         String textoConfirmarSenha = campoConfirmarSenha.getText().toString();
 
-                if (!textoNome.isEmpty()){
-                    if (!textoEmail.isEmpty()){
-                        if (!textoSenha.isEmpty()){
-                            if (!textoConfirmarSenha.isEmpty() && textoConfirmarSenha.equals(textoSenha)){
-                                Usuario usuario = new Usuario();
-                                usuario.setNome(textoNome);
-                                usuario.setEmail(textoEmail);
-                                usuario.setSenha(textoSenha);
-                                enviarCadastro.setVisibility(View.GONE);
-                                ProgressBarCustom.openProgressBar(progressBar);
-                                salvarUsuario(usuario);
+        if (!textoNome.isEmpty()){
+            if (!textoEmail.isEmpty()){
+                if (!textoSenha.isEmpty()){
+                    if (!textoConfirmarSenha.isEmpty() && textoConfirmarSenha.equals(textoSenha)){
+                        Usuario usuario = new Usuario();
+                        usuario.setNome(textoNome);
+                        usuario.setEmail(textoEmail);
+                        usuario.setSenha(textoSenha);
+                        enviarCadastro.setVisibility(View.GONE);
+                        ProgressBarCustom.openProgressBar(progressBar);
+                        salvarUsuario(usuario);
 
-                            }else{
-                                Toast.makeText(CadastroActivity.this,
-                                        "As senhas não conferem!",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }else{
-                            Toast.makeText(CadastroActivity.this,
-                                    "Preencha a senha!",
-                                    Toast.LENGTH_SHORT).show();
-                        }
                     }else{
                         Toast.makeText(CadastroActivity.this,
-                                "Preencha o Email!",
+                                "As senhas não conferem!",
                                 Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     Toast.makeText(CadastroActivity.this,
-                            "Preencha o nome!",
+                            "Preencha a senha!",
                             Toast.LENGTH_SHORT).show();
                 }
-
-
+            }else{
+                Toast.makeText(CadastroActivity.this,
+                        "Preencha o Email!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(CadastroActivity.this,
+                    "Preencha o nome!",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
     public void abreTermosDeUso(View view){
         Intent intent = new Intent(CadastroActivity.this, TermosDeUsoActivity.class);

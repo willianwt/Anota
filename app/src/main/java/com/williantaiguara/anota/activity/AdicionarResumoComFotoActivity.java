@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,7 @@ import com.williantaiguara.anota.R;
 import com.williantaiguara.anota.config.ConfiguracaoFirebase;
 import com.williantaiguara.anota.helper.Base64Custom;
 import com.williantaiguara.anota.helper.DateCustom;
+import com.williantaiguara.anota.helper.ProgressBarCustom;
 import com.williantaiguara.anota.model.Disciplina;
 import com.williantaiguara.anota.model.Lembrete;
 
@@ -45,12 +47,11 @@ public class AdicionarResumoComFotoActivity extends AppCompatActivity {
     private TextInputEditText tituloResumoComFoto;
     private ImageView imagemResumoComFoto;
     private Bitmap imagemRecebida;
-    private Button btSalvarResumoComFoto;
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private StorageReference storageReference = ConfiguracaoFirebase.getFirebaseStorage();
     private String emailUsuario = autenticacao.getCurrentUser().getEmail();
     private String idUsuario = Base64Custom.CodificarBase64(emailUsuario);
-    private String tipo;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -67,7 +68,10 @@ public class AdicionarResumoComFotoActivity extends AppCompatActivity {
 
         tituloResumoComFoto = findViewById(R.id.etTituloResumoComFoto);
         imagemResumoComFoto = findViewById(R.id.imgAdicionarResumoComFoto);
-        btSalvarResumoComFoto = findViewById(R.id.btSalvarComFoto);
+
+        progressBar = findViewById(R.id.progressBarAdcResumoComFoto);
+        ProgressBarCustom.closeProgressBar(progressBar);
+
 
         String filename = getIntent().getStringExtra("imagem");
         try {
@@ -81,14 +85,6 @@ public class AdicionarResumoComFotoActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        btSalvarResumoComFoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                verificarCampos();
-            }
-        });
-
 
     }
 
@@ -104,13 +100,12 @@ public class AdicionarResumoComFotoActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.salvar){
             try{
-                item.setEnabled(false);
+                item.setVisible(false);
                 verificarCampos();
-                item.setEnabled(true);
 
             }catch (Exception e){ //TODO: TRATAR ERROS
                 e.printStackTrace();
-                item.setEnabled(true);
+                item.setVisible(true);
 
             }
         }
@@ -120,6 +115,7 @@ public class AdicionarResumoComFotoActivity extends AppCompatActivity {
 
     private void salvarResumo(){
 
+        ProgressBarCustom.openProgressBar(progressBar);
         //Recuperar dados da imagem para o firebase
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         imagemRecebida.compress(Bitmap.CompressFormat.JPEG, 70, baos );
