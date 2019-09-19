@@ -104,6 +104,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public void abrirRecuperarSenha(View view){
+        Intent intent = new Intent(LoginActivity.this, RecuperarSenhaActivity.class);
+        startActivity(intent);
+    }
+
     protected void openProgressBar(){
         progressBar.setVisibility( View.VISIBLE );
     }

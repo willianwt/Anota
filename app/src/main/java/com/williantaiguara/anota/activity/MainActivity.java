@@ -7,6 +7,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -34,7 +35,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ConfiguracaoFirebase.getDatabasePersistance();
+        //ConfiguracaoFirebase.getDatabasePersistance();
+        Log.i("persistance", FirebaseDatabase.getInstance().getApp().getPersistenceKey());
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbarAdicionarCurso);
