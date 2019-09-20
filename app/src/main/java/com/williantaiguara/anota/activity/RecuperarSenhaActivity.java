@@ -3,6 +3,7 @@ package com.williantaiguara.anota.activity;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -14,16 +15,19 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.williantaiguara.anota.R;
 import com.williantaiguara.anota.config.ConfiguracaoFirebase;
+import com.williantaiguara.anota.helper.ProgressBarCustom;
 
 public class RecuperarSenhaActivity extends AppCompatActivity {
     private EditText emailCadastrado;
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private Button btRecuperarSenha;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,8 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
 
         emailCadastrado = findViewById(R.id.etEmailCadastrado);
         btRecuperarSenha = findViewById(R.id.btRecuperarSenha);
+        progressBar = findViewById(R.id.progressBarRecuperarSenha);
+        ProgressBarCustom.closeProgressBar(progressBar);
 
         btRecuperarSenha.setOnClickListener(
                 new View.OnClickListener() {
@@ -47,7 +53,9 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
 
     public void solicitarRecuperacao(){
      if (!emailCadastrado.getText().toString().isEmpty() && emailCadastrado.getText().toString() != ""){
+         btRecuperarSenha.setVisibility(View.GONE);
          String email = emailCadastrado.getText().toString();
+         ProgressBarCustom.openProgressBar(progressBar);
          autenticacao.sendPasswordResetEmail(email).addOnCompleteListener(
                  new OnCompleteListener<Void>() {
                      @Override
@@ -60,7 +68,16 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
                          }
                      }
                  }
-         );
+         ).addOnFailureListener(new OnFailureListener() {
+             @Override
+             public void onFailure(@NonNull Exception e) {
+                 ProgressBarCustom.closeProgressBar(progressBar);
+                 btRecuperarSenha.setVisibility(View.VISIBLE);
+                 Toast.makeText(RecuperarSenhaActivity.this,
+                         "Email não encontrado...",
+                         Toast.LENGTH_SHORT).show();
+             }
+         });
      }
     }
 

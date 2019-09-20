@@ -1,8 +1,11 @@
 package com.williantaiguara.anota.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -111,7 +114,12 @@ public class AdicionarResumoComFotoActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
     private void salvarResumo(){
 
@@ -131,6 +139,13 @@ public class AdicionarResumoComFotoActivity extends AppCompatActivity {
                 .child(nomeImagem);
 
         UploadTask uploadTask = imagemRef.putBytes(dadosImagem);
+        if (!isNetworkAvailable()){
+            Toast.makeText(AdicionarResumoComFotoActivity.this, "Ops, parece que vc está sem internet. Mas não se preocupe, a imagem será enviada e aparecerá no feed assim que tiver uma conexão...", Toast.LENGTH_LONG).show();
+
+        }else {
+            Toast.makeText(AdicionarResumoComFotoActivity.this, "Enviando imagem, aparecerá dentro de instantes...", Toast.LENGTH_SHORT).show();
+        }
+        finish();
 
         Task<Uri> urlTask =  uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
@@ -156,7 +171,6 @@ public class AdicionarResumoComFotoActivity extends AppCompatActivity {
                             Base64Custom.CodificarBase64(disciplina.getSemestreCurso()),
                             Base64Custom.CodificarBase64(disciplina.getNomeDisciplina()));
 
-                    finish();
                     overridePendingTransition(0, 0);
                     Toast.makeText(AdicionarResumoComFotoActivity.this, "Resumo adicionado com Sucesso!", Toast.LENGTH_SHORT).show();
 
@@ -165,6 +179,7 @@ public class AdicionarResumoComFotoActivity extends AppCompatActivity {
                             "Erro ao fazer upload da imagem!",
                             Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 

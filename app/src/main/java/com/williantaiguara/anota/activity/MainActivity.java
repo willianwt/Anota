@@ -15,6 +15,8 @@ import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,26 +31,27 @@ import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private FirebaseAuth autenticacao;
+    private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+    private TextView saudacao;
+    private String nomeUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //ConfiguracaoFirebase.getDatabasePersistance();
-        Log.i("persistance", FirebaseDatabase.getInstance().getApp().getPersistenceKey());
-
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbarAdicionarCurso);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
+        /*FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Este botão abrirá a página de contatos ou fará outra coisa, ainda não decidi.", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
+        saudacao = findViewById(R.id.txSaudacaoMain);
+
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -133,6 +136,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        autenticacao.getCurrentUser().reload();
+        nomeUsuario = autenticacao.getCurrentUser().getDisplayName();
+        saudacao.setText("Olá " + nomeUsuario);
     }
 
     private void logout(){
