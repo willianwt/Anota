@@ -85,7 +85,7 @@ public class AtualizarNotaActivity extends AppCompatActivity {
                 verificarCampos();
                 item.setEnabled(true);
 
-            }catch (Exception e){ //TODO: TRATAR ERROS
+            }catch (Exception e){
                 e.printStackTrace();
                 item.setEnabled(true);
 

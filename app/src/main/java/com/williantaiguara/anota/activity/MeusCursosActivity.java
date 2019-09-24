@@ -88,7 +88,7 @@ public class MeusCursosActivity extends AppCompatActivity {
 
                     @Override
                     public void onLongItemClick(View view, int position) {
-
+                        //TODO long click altera dados 
                     }
 
 
@@ -226,7 +226,7 @@ public class MeusCursosActivity extends AppCompatActivity {
                         .child("cursos");
                 Log.i("curso", curso.getKey());
 
-                listaCursosRef.child(curso.getKey()).removeValue();
+                listaCursosRef.child(Base64Custom.CodificarBase64(curso.getKey())).removeValue();
                 Toast.makeText(getApplicationContext(), "Exclusão Confirmada!", Toast.LENGTH_SHORT).show();
                 adapterCursos.notifyItemRemoved(position);
                 finish();

@@ -101,4 +101,5 @@
         \n O projeto está em desenvolvimento e novas funcionalidades podem surgir com o tempo.
         \n Abraços e bons estudos!</string>
     <string name="title_activity_feedback">FeedbackActivity</string>
+    <string name="inicio">Início</string>
 </resources>
