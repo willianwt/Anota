@@ -30,6 +30,10 @@
                 android:icon="@drawable/outline_contact_support_black_18dp"
                 android:title="Sobre" />
             <item
+                android:id="@+id/nav_ajuda"
+                android:icon="@drawable/baseline_help_outline_black_18dp"
+                android:title="Ajuda" />
+            <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_logout"
                 android:title="@string/action_logout" />

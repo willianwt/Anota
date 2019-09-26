@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.williantaiguara.anota.R;
 import com.williantaiguara.anota.config.ConfiguracaoFirebase;
+import com.williantaiguara.anota.model.Ajuda;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -121,6 +122,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, SobreActivity.class);
             startActivity(intent);
 
+        } else if (id == R.id.nav_ajuda) {
+            Intent intent = new Intent(this, AjudaActivity.class);
+            startActivity(intent);
+
         } else if (id == R.id.nav_logout) {
             logout();
             return true;
@@ -148,7 +153,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void logout(){
         autenticacao.signOut();
-        startActivity(new Intent(this, LoginActivity.class));
+        Intent intent = new Intent(this, OpenActivity.class);
+        intent.putExtra("logout", 1);
+        startActivity(intent);
         finish();
     }
 }

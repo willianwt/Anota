@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.SobreActivity">
+    tools:context=".activity.AjudaActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarSobre"
+        android:id="@+id/toolbarAjuda"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -16,7 +16,7 @@
         android:theme="?attr/actionBarTheme" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewSobre"
+        android:id="@+id/recyclerViewAjuda"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
