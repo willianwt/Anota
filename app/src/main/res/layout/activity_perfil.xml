@@ -69,4 +69,10 @@
         android:onClick="verificarCampos"
         android:text="Atualizar Dados"
         android:textColor="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
 </LinearLayout>
