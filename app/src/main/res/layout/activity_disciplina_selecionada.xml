@@ -85,6 +85,17 @@
             fab:fab_label="Foto"
             fab:fab_size="mini" />
 
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/menu_adc_lembrete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            android:onClick="abrirLembretesDisciplina"
+            app:fab_colorNormal="@color/colorPrimary"
+            app:fab_colorPressed="@color/colorPrimaryDark"
+            fab:fab_label="Lembrete"
+            fab:fab_size="mini" />
+
     </com.github.clans.fab.FloatingActionMenu>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

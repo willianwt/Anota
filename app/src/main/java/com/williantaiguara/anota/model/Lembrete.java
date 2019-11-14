@@ -37,10 +37,35 @@ public class Lembrete implements Serializable {
                 .setValue(this);
     }
 
+    public void salvarLembreteDisciplina(Disciplina disciplina){
+        firebase.child("usuarios")
+                .child(idUsuario)
+                .child("cursos")
+                .child(Base64Custom.CodificarBase64(disciplina.getNomeCurso()))
+                .child(Base64Custom.CodificarBase64(disciplina.getSemestreCurso()))
+                .child(Base64Custom.CodificarBase64(disciplina.getNomeDisciplina()))
+                .child("lembretes")
+                .push()
+                .setValue(this);
+    }
+
     public void atualizarLembrete(){
 
         firebase.child("usuarios")
                 .child(idUsuario)
+                .child("lembretes")
+                .child(key)
+                .setValue(this);
+    }
+
+    public void atualizarLembreteDisciplina(Disciplina disciplina){
+
+        firebase.child("usuarios")
+                .child(idUsuario)
+                .child("cursos")
+                .child(Base64Custom.CodificarBase64(disciplina.getNomeCurso()))
+                .child(Base64Custom.CodificarBase64(disciplina.getSemestreCurso()))
+                .child(Base64Custom.CodificarBase64(disciplina.getNomeDisciplina()))
                 .child("lembretes")
                 .child(key)
                 .setValue(this);

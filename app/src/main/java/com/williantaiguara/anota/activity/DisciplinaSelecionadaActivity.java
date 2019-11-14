@@ -269,6 +269,12 @@ public class DisciplinaSelecionadaActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void abrirLembretesDisciplina(View view){
+        Intent intent = new Intent(this, LembretesDisciplinaActivity.class);
+        intent.putExtra("disciplina", disciplina);
+        startActivity(intent);
+    }
+
     public void capturarImagem(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent

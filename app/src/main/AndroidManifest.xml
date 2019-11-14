@@ -160,6 +160,16 @@
                 android:windowSoftInputMode="adjustResize" />
         </activity>
         <activity
+            android:name=".activity.AdicionarLembreteDisciplinaActivity"
+            android:label="@string/title_activity_adicionar_lembrete"
+            android:parentActivityName=".activity.LembretesActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.williantaiguara.anota.activity.LembretesActivity"
+                android:windowSoftInputMode="adjustResize" />
+        </activity>
+        <activity
             android:name=".activity.AtualizarLembreteActivity"
             android:label="@string/title_activity_atualizar_lembrete"
             android:parentActivityName=".activity.LembretesActivity"
@@ -170,7 +180,26 @@
                 android:windowSoftInputMode="adjustResize" />
         </activity>
         <activity
+            android:name=".activity.AtualizarLembreteDisciplinaActivity"
+            android:label="@string/title_activity_atualizar_lembrete"
+            android:parentActivityName=".activity.LembretesActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.williantaiguara.anota.activity.LembretesActivity"
+                android:windowSoftInputMode="adjustResize" />
+        </activity>
+        <activity
             android:name=".activity.LembretesActivity"
+            android:label="@string/title_activity_lembretes"
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.williantaiguara.anota.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activity.LembretesDisciplinaActivity"
             android:label="@string/title_activity_lembretes"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
