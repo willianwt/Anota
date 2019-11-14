@@ -93,11 +93,8 @@ public class AtualizarLembreteDisciplinaActivity extends AppCompatActivity {
             }catch (Exception e){
                 e.printStackTrace();
                 item.setEnabled(true);
-
             }
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 
